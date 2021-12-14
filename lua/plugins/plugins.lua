@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
         end,
         requires = { 'winston0410/cmd-parser.nvim'},
     }
-    -- colorscheme
+    -- Colorscheme
     use{
         'sainnhe/gruvbox-material',
         config = vim.cmd('colorscheme gruvbox-material')
@@ -32,7 +32,40 @@ return require('packer').startup(function(use)
     use {
           'nvim-telescope/telescope.nvim',
           requires = { {'nvim-lua/plenary.nvim'} }
-        }
+    }
+-----------
+-- UI    --
+-----------
+    -- UI enhancements for neovim
+    use{
+        'CosmicNvim/cosmic-ui',
+        config = function()
+            require('cosmic-ui').setup({
+                autocomplete = true
+            })
+        end,
+        requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'ray-x/lsp_signature.nvim' },
+        after = {'nvim-lspconfig', 'nvim-cmp'}
+    }
+    -- Tab Bar
+    use {
+      'romgrk/barbar.nvim',
+      requires = {'kyazdani42/nvim-web-devicons'}
+    }
+    -- Status line
+    use 'tamton-aquib/staline.nvim'
+    -- Cursor ui improvements
+    use 'yamatsum/nvim-cursorline.nvim'
+    -- Welcome screen in Neovim
+    use {
+        'glepnir/dashboard-nvim',
+        config = function()
+            require('dashboard-nvim').setupt({
+                dashboard_default_executive = 'telescope'
+            })
+        end,
+    }
+    use "lukas-reineke/indent-blankline.nvim"
 ------------
 -- LSP    --
 ------------
