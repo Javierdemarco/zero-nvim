@@ -6,7 +6,7 @@
 local opt = vim.opt
 local g = vim.g
 -- Leader Key Space
-g.mapleader = ' '
+g.mapleader = ';'
 -- Autoindent lines
 opt.autoindent = true
 opt.smartindent = true

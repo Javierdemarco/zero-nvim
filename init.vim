@@ -1,12 +1,3 @@
 lua require('config.base')
-"lua require('plugins.color.color')
-"lua require('plugins.completion.completion')
-"lua require('plugins.fzf.fzf')
-"lua require('plugins.lsp.lsp')
-"lua require('plugins.markdown.markdown')
-"lua require('plugins.sintax.sintax')
-"lua require('plugins.terminal.terminal')
-"lua require('plugins.ui.ui')
-"lua require('plugins.utility.utility')
 lua require('plugins.plugins')
 syntax on
