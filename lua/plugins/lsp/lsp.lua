@@ -1,7 +1,7 @@
 -- File Containing the Plugins use to configure LSP
 -- Author: Javier de Marco
 
-return require('packer').startup(function(use)
+require('packer').startup(function(use)
     use{
         'neovim/nvim-lspconfig',
         config = function()

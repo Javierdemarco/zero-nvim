@@ -60,3 +60,6 @@ opt.wildmenu = true
 opt.termguicolors = true
 -- Smart case when searching, will be case sensitive when upper case included
 opt.smartcase = true
+-- Highlgight current possition
+opt.cursorline = true
+opt.cursorcolumn = true
