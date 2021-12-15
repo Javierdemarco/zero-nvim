@@ -1,15 +1,22 @@
 -- File Containing the Plugins and their configuration
 -- Author: Javier de Marco
 return require('packer').startup(function(use)
-------------
--- Colors --
-------------
+    -- Packer
+    use { "wbthomason/packer.nvim" }
+
+    ------------
+    -- Colors --
+    ------------
+
     -- Colors in HEX
-    -- TODO: Auto enable colorizer
     use{
         'norcalli/nvim-colorizer.lua',
         config = function()
-            require('colorizer').setup()
+            require('colorizer').setup{
+                "*",
+                css = { rgb_fn = true; }
+            }
+            vim.cmd("ColorizerArrachToBuffer")
         end,
     }
     -- Highlight range of operations
@@ -21,19 +28,34 @@ return require('packer').startup(function(use)
         requires = { 'winston0410/cmd-parser.nvim'},
     }
     -- Colorscheme
+    -- TODO: Take vim.cmd to global.lua
     use{
         'sainnhe/gruvbox-material',
         config = vim.cmd('colorscheme gruvbox-material')
     }
------------
--- FZF   --
------------
+
+    -----------
+    -- FZF   --
+    -----------
+
     -- Telescope as Fuzzy Finder
     -- TODO: Keybindings
     use {
-          'nvim-telescope/telescope.nvim',
-          requires = { {'nvim-lua/plenary.nvim'} }
+        'nvim-telescope/telescope.nvim',
+        requires = { {'nvim-lua/plenary.nvim'} },
+        after = "telescope_find_directories",
+        config = function()
+          require("plugins/telescope")
+        end
     }
+    -- Fzf Directories
+    use {
+        "artart222/telescope_find_directories",
+        after = "telescope-fzf-native.nvim"
+    }
+    -- Improve telescope performance
+    use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+
 ------------
 -- LSP    --
 ------------
@@ -53,9 +75,11 @@ return require('packer').startup(function(use)
 --    use 'simrat39/symbols-outline.nvim'
     -- LSP Installer
 --    use 'williamboman/nvim-lsp-installer'
----------------
--- MARKDOWN  --
----------------
+
+    ---------------
+    -- MARKDOWN  --
+    ---------------
+
     -- Live Preview
     -- TODO Keybinding
     use 'ellisonleao/glow.nvim'
@@ -70,30 +94,49 @@ return require('packer').startup(function(use)
     -- Preview in Browser
     -- TODO: Doesnt work
     use 'iamcco/markdown-preview.nvim'
---------------
--- SINTAX   --
---------------
+
+    --------------
+    -- SINTAX   --
+    --------------
+
     -- Better sintax highlight
     -- TODO: Check functionality
     use{
         'nvim-treesitter/nvim-treesitter',
         config = function()
-            require('nvim-treesitter').setup{
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false,
-                },
-                rainbow = {
-                    enable = true,
-                    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-                    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-                  }
-            }
+            require('plugins/treesitter')
+        end,
+        run = ":TSUpdate",
+        event = "BufEnter",
+        cmd = {
+          "TSInstall",
+          "TSInstallSync",
+          "TSBufEnable",
+          "TSBufToggle",
+          "TSEnableAll",
+          "TSInstallFromGrammer",
+          "TSToggleAll",
+          "TSUpdate",
+          "TSUpdateSync"
+        },
+    }
+    -- Text Objects for Treesitter
+    use{
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        after = "nvim-treesitter",
+    }
+    -- Context when in long function
+    -- TODO: Check
+    use{
+        'romgrk/nvim-treesitter-context',
+        config = function()
+            require('treesitter-context').setup()
+            vim.cmd('TSContextEnable')
         end,
     }
     -- Surrond operations
     -- TODO: Doesnt work
-    use {
+    use{
         'blackCauldron7/surround.nvim',
         config = function()
             require('surround').setup{
@@ -325,10 +368,7 @@ return require('packer').startup(function(use)
     -- ZEN Mode
     -- TODO: Check
     use "Pocco81/TrueZen.nvim"
-    -- Context when in long function
-    -- TODO: Check
-    use 'romgrk/nvim-treesitter-context'
-    -- Motion with Tab outside of pairs
+        -- Motion with Tab outside of pairs
     -- TODO: Check, Learn, Keybind
     use {
       'abecodes/tabout.nvim',

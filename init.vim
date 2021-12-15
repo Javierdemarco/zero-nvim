@@ -1,3 +1,3 @@
-lua require('config.base')
-lua require('plugins.plugins')
+lua require('base')
+lua require('plugins')
 syntax on
