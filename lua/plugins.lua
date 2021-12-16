@@ -1,5 +1,6 @@
 -- File Containing the Plugins and their configuration
 -- Author: Javier de Marco
+
 return require('packer').startup(function(use)
     -- Packer
     use { "wbthomason/packer.nvim" }
@@ -11,12 +12,13 @@ return require('packer').startup(function(use)
     -- Colors in HEX
     use{
         'norcalli/nvim-colorizer.lua',
+        event = "BufEnter",
         config = function()
             require('colorizer').setup{
                 "*",
                 css = { rgb_fn = true; }
             }
-            vim.cmd("ColorizerArrachToBuffer")
+            vim.cmd("ColorizerAttachToBuffer")
         end,
     }
     -- Highlight range of operations
@@ -31,7 +33,7 @@ return require('packer').startup(function(use)
     -- TODO: Take vim.cmd to global.lua
     use{
         'sainnhe/gruvbox-material',
-        config = vim.cmd('colorscheme gruvbox-material')
+        run = vim.cmd('colorscheme gruvbox-material')
     }
 
     -----------
@@ -56,25 +58,39 @@ return require('packer').startup(function(use)
     -- Improve telescope performance
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
-------------
--- LSP    --
-------------
+    ------------
+    -- LSP    --
+    ------------
+
     -- LSP config
---    use{
---       'neovim/nvim-lspconfig',
---        config = function()
---            -- Python
---            require('lspconfig').pylsp.setup()
---        end,
---    }
+    use{
+       'neovim/nvim-lspconfig',
+       event = "BufEnter",
+    }
     -- Colors for icons in errors and warnigns
---    use 'folke/lsp-colors.nvim'
+    use 'folke/lsp-colors.nvim'
     -- LSP siganuture enable. See documentation when typing
---    use 'ray-x/lsp_signature.nvim'
+    use {
+        "ray-x/lsp_signature.nvim",
+        after = "nvim-lspconfig",
+        config = function ()
+          require("lsp_signature").setup()
+        end
+    }
     -- Simbols outline
---    use 'simrat39/symbols-outline.nvim'
+    use 'simrat39/symbols-outline.nvim'
     -- LSP Installer
---    use 'williamboman/nvim-lsp-installer'
+    use {
+        "williamboman/nvim-lsp-installer",
+        after = "nvim-lspconfig",
+        config = function()
+          require("plugins/lsp")
+        end
+    }
+    use {
+        "hrsh7th/cmp-nvim-lsp",
+        after = "nvim-lsp-installer"
+    }
 
     ---------------
     -- MARKDOWN  --
@@ -100,7 +116,7 @@ return require('packer').startup(function(use)
     --------------
 
     -- Better sintax highlight
-    -- TODO: Check functionality
+    -- TODO: Check
     use{
         'nvim-treesitter/nvim-treesitter',
         config = function()
@@ -121,6 +137,7 @@ return require('packer').startup(function(use)
         },
     }
     -- Text Objects for Treesitter
+    -- TODO: Check
     use{
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = "nvim-treesitter",
@@ -128,11 +145,12 @@ return require('packer').startup(function(use)
     -- Context when in long function
     -- TODO: Check
     use{
-        'romgrk/nvim-treesitter-context',
+       'romgrk/nvim-treesitter-context',
         config = function()
             require('treesitter-context').setup()
             vim.cmd('TSContextEnable')
         end,
+        after = "nvim-treesitter",
     }
     -- Surrond operations
     -- TODO: Doesnt work
@@ -144,16 +162,23 @@ return require('packer').startup(function(use)
             }
         end,
     }
---------------
--- Terminal --
---------------
-    -- Terminal
-    -- TODO: Doesnt work when kitty has neovim keys
-    use {"akinsho/toggleterm.nvim"}
+    --------------
+    -- Terminal --
+    --------------
 
--------------
--- DEBUG   --
--------------
+    -- Terminal
+    -- TODO: Keybind
+    use {
+        "akinsho/toggleterm.nvim",
+        config = function()
+            require('plugins/toggleterm')
+        end,
+    }
+
+    -------------
+    -- DEBUG   --
+    -------------
+
     -- Debugger
     -- TODO: Check
     use 'mfussenegger/nvim-dap'
@@ -169,31 +194,32 @@ return require('packer').startup(function(use)
     -- Debbugger Installer
     -- TODO: Install but dap doesnt recognize it
     use "Pocco81/DAPInstall.nvim"
------------
--- UI    --
------------
+
+    -----------
+    -- UI    --
+    -----------
+
     -- UI enhancements for neovim
-    -- TODO
-    --use{
-    --    'CosmicNvim/cosmic-ui',
-    --    config = function()
-    --        require('cosmic-ui').setup({
-    --           autocomplete = true
-    --        })
-    --    end,
-    --    requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'ray-x/lsp_signature.nvim' },
-    --    after = {'nvim-lspconfig', 'nvim-cmp'}
+    -- TODO keybinds
+--    use({
+--        'CosmicNvim/cosmic-ui',
+--        requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'ray-x/lsp_signature.nvim' },
+--        config = function()
+--          require('cosmic-ui').setup()
+--        end,
+--        after = 'nvim-lspconfig',
+--    })
     --}
     -- Tab Bar
-    use {
-      'romgrk/barbar.nvim',
-      requires = {'kyazdani42/nvim-web-devicons'}
-    }
+--    use {
+--      'romgrk/barbar.nvim',
+--      requires = {'kyazdani42/nvim-web-devicons'}
+--    }
     -- Status line
     use{
         'tamton-aquib/staline.nvim',
         config = function()
-            require('staline').setup()
+            require('plugins.staline')
         end,
     }
     -- Cursor ui improvements
@@ -328,26 +354,24 @@ return require('packer').startup(function(use)
     }
     -- Generating Awesome Comments
     -- TODO: doesnt work
-    use {
-        's1n7ax/nvim-comment-frame',
-        requires = {
-            { 'nvim-treesitter' }
-        },
-        config = function()
-            require('nvim-comment-frame').setup()
-        end
-    }
+--    use {
+--        's1n7ax/nvim-comment-frame',
+--        requires = 'nvim-treesitter/nvim-treesitter',
+--        config = function()
+--            require('nvim-comment-frame').setup()
+--        end
+--    }
     -- Generation Documentation
     -- TODO: doesnt work Learn
-    use {
-        "danymat/neogen",
-        config = function()
-            require('neogen').setup {
-                enabled = true
-            }
-        end,
-        requires = "nvim-treesitter/nvim-treesitter"
-    }
+--    use {
+--        "danymat/neogen",
+--        config = function()
+--            require('neogen').setup {
+--                enabled = true
+--            }
+--        end,
+--        requires = "nvim-treesitter/nvim-treesitter"
+--    }
 --------------
 -- CODE RUN --
 --------------
@@ -368,33 +392,6 @@ return require('packer').startup(function(use)
     -- ZEN Mode
     -- TODO: Check
     use "Pocco81/TrueZen.nvim"
-        -- Motion with Tab outside of pairs
-    -- TODO: Check, Learn, Keybind
-    use {
-      'abecodes/tabout.nvim',
-      config = function()
-        require('tabout').setup {
-            tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
-            backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
-            act_as_tab = true, -- shift content if tab out is not possible
-            act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
-            enable_backwards = true, -- well ...
-            completion = true, -- if the tabkey is used in a completion pum
-            tabouts = {
-              {open = "'", close = "'"},
-              {open = '"', close = '"'},
-              {open = '`', close = '`'},
-              {open = '(', close = ')'},
-              {open = '[', close = ']'},
-              {open = '{', close = '}'}
-            },
-            ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
-            exclude = {} -- tabout will ignore these filetypes
-        }
-      end,
-        wants = {'nvim-treesitter'}, -- or require if not used so far
-        after = {'completion-nvim'} -- if a completion plugin is using tabs load it before
-    }
     -- Delete Trailing Spaces and Lines
     -- TODO: Check
     use "McAuleyPenney/tidy.nvim"
@@ -465,5 +462,20 @@ return require('packer').startup(function(use)
     --             }
     --         })
     --     end,
+    --
+    ------------------
+    --  COMPLETION  --
+    ------------------
 
+    use {
+        'hrsh7th/nvim-cmp',
+        config = function()
+            require('plugins/nvim-cmp')
+        end,
+    }
+    use 'onsails/lspkind-nvim'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'lukas-reineke/cmp-under-comparator'
 end)
