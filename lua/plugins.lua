@@ -210,11 +210,6 @@ return require('packer').startup(function(use)
 --        after = 'nvim-lspconfig',
 --    })
     --}
-    -- Tab Bar
---    use {
---      'romgrk/barbar.nvim',
---      requires = {'kyazdani42/nvim-web-devicons'}
---    }
     -- Status line
     use{
         'tamton-aquib/staline.nvim',

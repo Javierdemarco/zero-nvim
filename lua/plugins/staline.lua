@@ -46,7 +46,10 @@ staline.setup {
 
 stabline.setup {
 	style = "arrow", -- others: arrow, slant, bubble
-    bg = "#282828",
-	fg = "#ebdbb2",
+    bg = "#3c3836",
+	fg = "#84a698",
+    stab_bg = "#282828",
+    inactive_bg = "#282828",
+    inactive_fg = "#a89984"
     --stab_right = "",
 }
