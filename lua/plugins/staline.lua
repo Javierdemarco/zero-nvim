@@ -28,7 +28,7 @@ staline.setup {
 	defaults={
 		fg = "#ebdbb2",
 		cool_symbol = "  ",
-		left_separator = "",
+		 left_separator = "",
 		--right_separator = "",
 		-- line_column = "%l:%c [%L]",
 		true_colors = true,
@@ -36,7 +36,7 @@ staline.setup {
 		-- font_active = "bold"
 	},
 	mode_colors = {
-        n = "#a89984",
+        n = "#799294",
 		i = "#84a698",
 		c = "#8fbf7f",
         R = "#98971a",
@@ -46,10 +46,10 @@ staline.setup {
 
 stabline.setup {
 	style = "arrow", -- others: arrow, slant, bubble
-    bg = "#3c3836",
+    bg = "#21252b",
 	fg = "#84a698",
-    stab_bg = "#282828",
-    inactive_bg = "#282828",
-    inactive_fg = "#a89984"
+    stab_bg = "#282c34",
+    inactive_bg = "#282c34",
+    inactive_fg = "#abb2bf"
     --stab_right = "",
 }

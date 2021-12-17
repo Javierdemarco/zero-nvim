@@ -30,11 +30,8 @@ return require('packer').startup(function(use)
         requires = { 'winston0410/cmd-parser.nvim'},
     }
     -- Colorscheme
-    -- TODO: Take vim.cmd to global.lua
-    use{
-        'sainnhe/gruvbox-material',
-        run = vim.cmd('colorscheme gruvbox-material')
-    }
+    use 'sainnhe/gruvbox-material'
+    use 'ful1e5/onedark.nvim'
 
     -----------
     -- FZF   --
@@ -99,14 +96,6 @@ return require('packer').startup(function(use)
     -- Live Preview
     -- TODO Keybinding
     use 'ellisonleao/glow.nvim'
-    -- Markdown Workflow
-    --use({'jakewvincent/mkdnflow.nvim',
-         --config = function()
-            --require('mkdnflow').setup({
-                -- Config goes here; leave blank for defaults
-            --})
-         --end
-    --})
     -- Preview in Browser
     -- TODO: Doesnt work
     use 'iamcco/markdown-preview.nvim'
@@ -116,7 +105,6 @@ return require('packer').startup(function(use)
     --------------
 
     -- Better sintax highlight
-    -- TODO: Check
     use{
         'nvim-treesitter/nvim-treesitter',
         config = function()
@@ -137,13 +125,11 @@ return require('packer').startup(function(use)
         },
     }
     -- Text Objects for Treesitter
-    -- TODO: Check
     use{
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = "nvim-treesitter",
     }
     -- Context when in long function
-    -- TODO: Check
     use{
        'romgrk/nvim-treesitter-context',
         config = function()
@@ -167,7 +153,6 @@ return require('packer').startup(function(use)
     --------------
 
     -- Terminal
-    -- TODO: Keybind
     use {
         "akinsho/toggleterm.nvim",
         config = function()
@@ -199,17 +184,6 @@ return require('packer').startup(function(use)
     -- UI    --
     -----------
 
-    -- UI enhancements for neovim
-    -- TODO keybinds
---    use({
---        'CosmicNvim/cosmic-ui',
---        requires = { 'MunifTanjim/nui.nvim', 'nvim-lua/plenary.nvim', 'ray-x/lsp_signature.nvim' },
---        config = function()
---          require('cosmic-ui').setup()
---        end,
---        after = 'nvim-lspconfig',
---    })
-    --}
     -- Status line
     use{
         'tamton-aquib/staline.nvim',
@@ -220,19 +194,35 @@ return require('packer').startup(function(use)
     -- Cursor ui improvements
     use 'yamatsum/nvim-cursorline'
     -- Welcome screen in Neovim
-    -- TODO: Change title
     use {
         'glepnir/dashboard-nvim',
-        config = {
-            'vim.g.dashboard_default_executive = "telescope"',
-        }
+        cmd = {
+          "Dashboard",
+          "DashboardChangeColorscheme",
+          "DashboardFindFile",
+          "DashboardFindHistory",
+          "DashboardFindWord",
+          "DashboardNewFile",
+          "DashboardJumpMarks",
+          "SessionLoad",
+          "SessionSave"
+        },
+        config = function()
+          require('plugins.dashboard')
+        end
     }
-    use "lukas-reineke/indent-blankline.nvim"
--------------
--- UTILITY --
--------------
+    -- Indentation guides
+    use{
+        "lukas-reineke/indent-blankline.nvim",
+        config = function()
+            require('plugins.indent-blankline')
+        end,
+    }
+    -------------
+    -- UTILITY --
+    -------------
+
     -- Keybinding lookup with FZF
-    -- TODO: Check
     use {
       'sudormrfbin/cheatsheet.nvim',
 
@@ -245,48 +235,52 @@ return require('packer').startup(function(use)
     -- Dev icons in ui
     use 'kyazdani42/nvim-web-devicons'
     -- Ranger inside nvim
-    -- TODO: Check
-    use 'kevinhwang91/rnvimr'
+    use{
+        'kevinhwang91/rnvimr',
+        config = function()
+            require('plugins.ranger')
+        end,
+    }
     -- File Tree
-    -- TODO: Learn
-    use 'ms-jpq/chadtree'
+    use{
+        'ms-jpq/chadtree',
+        config = function()
+            require('plugins.chadtree')
+        end,
+    }
     -- Preatty list for showing things realted to errors and warnings
-    -- TODO: Check
     use {
       "folke/trouble.nvim",
       requires = "kyazdani42/nvim-web-devicons",
       config = function()
         require("trouble").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
+            auto_preview = false
         }
       end
     }
     -- Better Search
-    -- TODO: Check, Learn and Keybind
     use {'kevinhwang91/nvim-hlslens'}
     -- Project Management
-    -- TODO: Check and Learn and Keybind
-    -- Lua
     use {
       "ahmedkhalf/project.nvim",
       config = function()
         require("project_nvim").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
+            manual_root = true,
+            silent_chdir = false,
         }
       end
     }
     -- Better Command Neovim Line
-    -- TODO: Check
-    use 'gelguy/wilder.nvim'
+    use{
+        'gelguy/wilder.nvim',
+        config = function()
+            require('plugins.wilder')
+        end,
+    }
     -- Testing
     -- TODO: Check
-    use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+    --use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
     -- Keybinding configuration
-    -- TODO:Check
     use {
       "folke/which-key.nvim",
       config = function()
@@ -298,7 +292,6 @@ return require('packer').startup(function(use)
       end
     }
     -- Which Key Wrapper, Easier Config
-    -- TODO:Check
     use {
         'AckslD/nvim-whichkey-setup.lua',
         requires = {'liuchengxu/vim-which-key'},
@@ -313,7 +306,13 @@ return require('packer').startup(function(use)
     use 'f-person/git-blame.nvim'
     -- Git Client inside Neovim (just like Magit)
     -- TODO: Keybinding
-    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    -- use {
+    --     'TimUntersberger/neogit',
+    --     config = function()
+    --         require('neogit').setup{}
+    --     end,
+    --     requires = 'nvim-lua/plenary.nvim'
+    -- }
     -- Git Signs on lines
     use {
       'lewis6991/gitsigns.nvim',

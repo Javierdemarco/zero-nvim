@@ -23,3 +23,4 @@ telescope.setup {
 -- Load Extensions
 telescope.load_extension("fzf")
 telescope.load_extension("find_directories")
+telescope.load_extension("projects")

@@ -69,3 +69,15 @@ opt.clipboard = 'unnamedplus'
 
 -- Python interpreter
 g.python3_host_prog = "/bin/python"
+
+-- Auto open nvim-tree when writing (nvim .) in command line
+-- and auto open Dashboard when nothing given as argument.
+vim.cmd
+[[
+if index(argv(), ".") >= 0
+  autocmd VimEnter * CHADopen
+  bd1
+elseif len(argv()) == 0
+  autocmd VimEnter * Dashboard
+endif
+]]
