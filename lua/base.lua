@@ -61,7 +61,7 @@ opt.wildmenu = true -- Better tab completion
 opt.completeopt = "menuone,noselect"
 
 -- Spelling checking and languages
-opt.spell = true
+opt.spell = false
 opt.spelllang = "en_us,es_es"
 
 -- Use clipboard instead of '+' and '*'

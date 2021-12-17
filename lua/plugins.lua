@@ -5,40 +5,10 @@ return require('packer').startup(function(use)
     -- Packer
     use { "wbthomason/packer.nvim" }
 
-    ------------
-    -- Colors --
-    ------------
-
-    -- Colors in HEX
-    use{
-        'norcalli/nvim-colorizer.lua',
-        event = "BufEnter",
-        config = function()
-            require('colorizer').setup{
-                "*",
-                css = { rgb_fn = true; }
-            }
-            vim.cmd("ColorizerAttachToBuffer")
-        end,
-    }
-    -- Highlight range of operations
-    use{
-        'winston0410/range-highlight.nvim',
-        config = function()
-            require('range-highlight').setup()
-        end,
-        requires = { 'winston0410/cmd-parser.nvim'},
-    }
-    -- Colorscheme
-    use 'sainnhe/gruvbox-material'
-    use 'ful1e5/onedark.nvim'
-
     -----------
     -- FZF   --
     -----------
-
     -- Telescope as Fuzzy Finder
-    -- TODO: Keybindings
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} },
@@ -58,7 +28,6 @@ return require('packer').startup(function(use)
     ------------
     -- LSP    --
     ------------
-
     -- LSP config
     use{
        'neovim/nvim-lspconfig',
@@ -84,26 +53,18 @@ return require('packer').startup(function(use)
           require("plugins/lsp")
         end
     }
-    use {
-        "hrsh7th/cmp-nvim-lsp",
-        after = "nvim-lsp-installer"
-    }
 
     ---------------
     -- MARKDOWN  --
     ---------------
-
     -- Live Preview
-    -- TODO Keybinding
     use 'ellisonleao/glow.nvim'
     -- Preview in Browser
-    -- TODO: Doesnt work
     use 'iamcco/markdown-preview.nvim'
 
     --------------
     -- SINTAX   --
     --------------
-
     -- Better sintax highlight
     use{
         'nvim-treesitter/nvim-treesitter',
@@ -138,61 +99,78 @@ return require('packer').startup(function(use)
         end,
         after = "nvim-treesitter",
     }
-    -- Surrond operations
-    -- TODO: Doesnt work
-    use{
-        'blackCauldron7/surround.nvim',
-        config = function()
-            require('surround').setup{
-                mappings_style = "sandwich"
-            }
-        end,
-    }
+
     --------------
     -- Terminal --
     --------------
-
     -- Terminal
     use {
         "akinsho/toggleterm.nvim",
         config = function()
-            require('plugins/toggleterm')
+            require('plugins.toggleterm')
         end,
     }
 
     -------------
     -- DEBUG   --
     -------------
-
     -- Debugger
-    -- TODO: Check
     use 'mfussenegger/nvim-dap'
     -- Debugger UI enhancement
-    -- TODO: Check
     use{
         "rcarriga/nvim-dap-ui",
-        requires = {"mfussenegger/nvim-dap"},
+        after = "DAPInstall.nvim",
         config = function()
-            require('dapui').setup()
+            require('plugins.dap')
         end,
     }
     -- Debbugger Installer
-    -- TODO: Install but dap doesnt recognize it
-    use "Pocco81/DAPInstall.nvim"
+    use{
+        "Pocco81/DAPInstall.nvim",
+        after = 'nvim-dap',
+    }
 
     -----------
     -- UI    --
     -----------
-
-    -- Status line
+    -- Colors in HEX
     use{
-        'tamton-aquib/staline.nvim',
+        'norcalli/nvim-colorizer.lua',
+        event = "BufEnter",
         config = function()
-            require('plugins.staline')
+            require('colorizer').setup{
+                "*",
+                css = { rgb_fn = true; }
+            }
+            vim.cmd("ColorizerAttachToBuffer")
         end,
     }
-    -- Cursor ui improvements
-    use 'yamatsum/nvim-cursorline'
+    -- Highlight range of operations
+    use{
+        'winston0410/range-highlight.nvim',
+        config = function()
+            require('range-highlight').setup()
+        end,
+        requires = { 'winston0410/cmd-parser.nvim'},
+    }
+    -- Colorschemes
+    use 'sainnhe/gruvbox-material'
+    use 'ful1e5/onedark.nvim'
+    -- Tab bar
+    use {
+        'romgrk/barbar.nvim',
+        requires = {'kyazdani42/nvim-web-devicons'},
+        config = function()
+            require('plugins.status-tab')
+        end,
+    }
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        config = function()
+            require('plugins.status-tab')
+        end,
+    }
     -- Welcome screen in Neovim
     use {
         'glepnir/dashboard-nvim',
@@ -218,14 +196,15 @@ return require('packer').startup(function(use)
             require('plugins.indent-blankline')
         end,
     }
+
     -------------
     -- UTILITY --
     -------------
-
+    -- Partial Code Run
+    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
     -- Keybinding lookup with FZF
     use {
       'sudormrfbin/cheatsheet.nvim',
-
       requires = {
         {'nvim-telescope/telescope.nvim'},
         {'nvim-lua/popup.nvim'},
@@ -248,7 +227,7 @@ return require('packer').startup(function(use)
             require('plugins.chadtree')
         end,
     }
-    -- Preatty list for showing things realted to errors and warnings
+    -- Preatty list for showing things related to errors and warnings
     use {
       "folke/trouble.nvim",
       requires = "kyazdani42/nvim-web-devicons",
@@ -258,7 +237,7 @@ return require('packer').startup(function(use)
         }
       end
     }
-    -- Better Search
+    -- Better Search indicates number of mathces
     use {'kevinhwang91/nvim-hlslens'}
     -- Project Management
     use {
@@ -270,7 +249,7 @@ return require('packer').startup(function(use)
         }
       end
     }
-    -- Better Command Neovim Line
+    -- Better Command Line
     use{
         'gelguy/wilder.nvim',
         config = function()
@@ -297,37 +276,30 @@ return require('packer').startup(function(use)
         requires = {'liuchengxu/vim-which-key'},
     }
     -- Rearrange Windows
-    -- TODO:Check
     use 'sindrets/winshift.nvim'
-------------
--- GIT    --
------------
+
+    ------------
+    -- GIT    --
+    -----------
     -- Git Blame on changes
     use 'f-person/git-blame.nvim'
-    -- Git Client inside Neovim (just like Magit)
-    -- TODO: Keybinding
-    -- use {
-    --     'TimUntersberger/neogit',
-    --     config = function()
-    --         require('neogit').setup{}
-    --     end,
-    --     requires = 'nvim-lua/plenary.nvim'
-    -- }
+    -- Lazygit inside vim
+    use 'kdheepak/lazygit.nvim'
     -- Git Signs on lines
     use {
-      'lewis6991/gitsigns.nvim',
-      requires = {
-        'nvim-lua/plenary.nvim'
-      },
-      config = function()
-        require('gitsigns').setup()
-      end
+        'lewis6991/gitsigns.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        },
+        config = function()
+            require('gitsigns').setup()
+        end
     }
---------------
--- COMMENTS --
---------------
+
+    --------------
+    -- COMMENTS --
+    --------------
     -- Comments made easy
-    -- TODO: Lear and Keybindings
     use {
         'numToStr/Comment.nvim',
         config = function()
@@ -339,11 +311,7 @@ return require('packer').startup(function(use)
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
-        }
+        require("todo-comments").setup{}
       end
     }
     -- Generating Awesome Comments
@@ -357,115 +325,55 @@ return require('packer').startup(function(use)
 --    }
     -- Generation Documentation
     -- TODO: doesnt work Learn
---    use {
---        "danymat/neogen",
---        config = function()
---            require('neogen').setup {
---                enabled = true
---            }
---        end,
---        requires = "nvim-treesitter/nvim-treesitter"
---    }
---------------
--- CODE RUN --
---------------
-    -- Partial Code Run
-    -- TODO: Check and Learn, Keybind
-    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
--------------------
--- EDITING TOOLS --
-------------------
+   -- use {
+   --     "danymat/neogen",
+   --     config = function()
+   --         require('neogen').setup {
+   --             enabled = true
+   --         }
+   --     end,
+   --     requires = "nvim-treesitter/nvim-treesitter"
+   -- }
+
+    -------------------
+    -- EDITING TOOLS --
+    -------------------
+    -- Surrond operations
+    -- TODO: doesnt work
+    use{
+        'blackCauldron7/surround.nvim',
+        config = function()
+            require('surround').setup{
+                mappings_style = "sandwich"
+            }
+        end,
+    }
+
     -- Autopair
-    -- TODO: Check
     use{
         'windwp/nvim-autopairs',
         config = function()
             require('nvim-autopairs').setup{}
         end,
     }
-    -- ZEN Mode
-    -- TODO: Check
-    use "Pocco81/TrueZen.nvim"
     -- Delete Trailing Spaces and Lines
-    -- TODO: Check
     use "McAuleyPenney/tidy.nvim"
     -- FORMATER
-    -- TODO: Check
+    -- TODO: doesnt work
     use 'sbdchd/neoformat'
-    -- FORMATER
-    -- TODO: Check All languages
-    -- use{
-    --     'mhartington/formatter.nvim',
-    --     config = function()
-    --         require('formatter').setup({
-    --             filetype = {
-    --                 -- RUST FORMATER
-    --                 rust = {
-    --                     function()
-    --                         return {
-    --                             exe = "rustfmt",
-    --                             args = {"--emit=stdout"},
-    --                             stdin = true
-    --                         }
-    --                     end
-    --                 },
-    --                 -- Shell Script Formatter
-    --                 sh = {
-    --                     function()
-    --                         return {
-    --                             exe = "shfmt",
-    --                             args = { "-i", 2 },
-    --                             stdin = true,
-    --                         }
-    --                     end,
-    --                 }
-    --                 -- LUA Formater
-    --                 lua = {
-    --                     -- luafmt
-    --                     function()
-    --                         return {
-    --                             exe = "luafmt",
-    --                             args = {"--indent-count", 2, "--stdin"},
-    --                             stdin = true
-    --                         }
-    --                     end
-    --                 },
-    --                 -- C/C++ Formater
-    --                 cpp = {
-    --                     -- clang-format
-    --                     function()
-    --                         return {
-    --                             exe = "clang-format",
-    --                             args = {"--assume-filename", vim.api.nvim_buf_get_name(0)},
-    --                             stdin = true,
-    --                             cwd = vim.fn.expand('%:p:h')  -- Run clang-format in cwd of the file.
-    --                         }
-    --                     end
-    --                 },
-    --                 -- Python Formater
-    --                 python = {
-    --                     -- Configuration for psf/black
-    --                     function()
-    --                         return {
-    --                             exe = "black", -- this should be available on your $PATH
-    --                             args = { '-' },
-    --                             stdin = true,
-    --                         }
-    --                     end
-    --                 }
-    --             }
-    --         })
-    --     end,
-    --
+
     ------------------
     --  COMPLETION  --
     ------------------
-
     use {
         'hrsh7th/nvim-cmp',
         config = function()
             require('plugins/nvim-cmp')
         end,
+    }
+    use {
+        "hrsh7th/cmp-nvim-lsp",
+        after = "nvim-lsp-installer"
     }
     use 'onsails/lspkind-nvim'
     use 'hrsh7th/cmp-buffer'
