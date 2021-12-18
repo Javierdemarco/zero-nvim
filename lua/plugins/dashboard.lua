@@ -20,11 +20,12 @@ g.dashboard_custom_header = {
 g.dashboard_custom_section = {
     a = { description = { "  Find File                 SPC f f" }, command = "Telescope find_files" },
     b = { description = { "  Find directory            SPC f d" }, command = "Telescope find_directories" },
-    c = { description = { "  Recents                   SPC f o" }, command = "Telescope oldfiles" },
-    d = { description = { "  Find Word                 SPC f w" }, command = "Telescope live_grep" },
+    c = { description = { "  Recents                   SPC f r" }, command = "Telescope oldfiles" },
+    d = { description = { "  Find Word In Project      SPC s p" }, command = "Telescope live_grep" },
     e = { description = { "洛 New File                  SPC f n" }, command = "DashboardNewFile" },
-    f = { description = { "  Bookmarks                 SPC b m" }, command = "Telescope marks" },
-    g = { description = { "  Load Last Session         SPC s l" }, command = "SessionLoad" }
+    f = { description = { "  Projects                  SPC f P" }, command = "Telescope projects" },
+    --f = { description = { "  Bookmarks                 SPC c b" }, command = "Telescope marks" },
+    g = { description = { "  Load Last Session         SPC c l" }, command = "SessionLoad" },
 }
 
 g.dashboard_custom_footer = {

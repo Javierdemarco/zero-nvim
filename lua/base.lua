@@ -9,8 +9,8 @@ local opt = vim.opt
 local g = vim.g
 
 -- Keyboard and Mouse
-g.mapleader = ';' -- Leader Key Space
-opt.timeoutlen = 1000 -- Faster Mapped sequence timeout
+g.mapleader = ' ' -- Leader Key Space
+opt.timeoutlen = 500 -- Faster Mapped sequence timeout
 opt.mouse = "a" -- Enable mouse support
 
 -- GUI
@@ -70,7 +70,7 @@ opt.clipboard = 'unnamedplus'
 -- Python interpreter
 g.python3_host_prog = "/bin/python"
 
--- Auto open nvim-tree when writing (nvim .) in command line
+-- Auto open CHADTree when writing (nvim .) in command line
 -- and auto open Dashboard when nothing given as argument.
 vim.cmd
 [[

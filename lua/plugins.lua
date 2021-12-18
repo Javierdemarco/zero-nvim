@@ -60,7 +60,7 @@ return require('packer').startup(function(use)
     -- Live Preview
     use 'ellisonleao/glow.nvim'
     -- Preview in Browser
-    use 'iamcco/markdown-preview.nvim'
+    --use 'iamcco/markdown-preview.nvim'
 
     --------------
     -- SINTAX   --
@@ -201,7 +201,23 @@ return require('packer').startup(function(use)
     -- UTILITY --
     -------------
     -- Partial Code Run
-    use { 'michaelb/sniprun', run = 'bash ./install.sh'}
+    use {
+        'michaelb/sniprun',
+        config = function()
+            require('sniprun').setup{
+                display = {
+                    "VirtualTextOk",
+                    "VirtualTextErr",
+                    -- "TempFloatingWindow",
+                    "LongTempFloatingWindow",
+                }
+            }
+        end,
+
+        run = 'bash ./install.sh'
+    }
+    -- Startup time
+    use 'dstein64/vim-startuptime'
     -- Keybinding lookup with FZF
     use {
       'sudormrfbin/cheatsheet.nvim',
@@ -227,6 +243,17 @@ return require('packer').startup(function(use)
             require('plugins.chadtree')
         end,
     }
+      use {
+        "kyazdani42/nvim-tree.lua",
+        cmd = {
+          "NvimTreeOpen",
+          "NvimTreeFocus",
+          "NvimTreeToggle",
+        },
+        config = function()
+          require("plugins/nvim-tree")
+        end
+      }
     -- Preatty list for showing things related to errors and warnings
     use {
       "folke/trouble.nvim",
@@ -255,6 +282,7 @@ return require('packer').startup(function(use)
         config = function()
             require('plugins.wilder')
         end,
+        requires = {"romgrk/fzy-lua-native"}
     }
     -- Testing
     -- TODO: Check
@@ -264,16 +292,12 @@ return require('packer').startup(function(use)
       "folke/which-key.nvim",
       config = function()
         require("which-key").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
+            popup_mappings = {
+                scroll_down = '<Tab>', -- binding to scroll down inside the popup
+                scroll_up = '<s-Tab>', -- binding to scroll up inside the popup
+            },
         }
       end
-    }
-    -- Which Key Wrapper, Easier Config
-    use {
-        'AckslD/nvim-whichkey-setup.lua',
-        requires = {'liuchengxu/vim-which-key'},
     }
     -- Rearrange Windows
     use 'sindrets/winshift.nvim'
