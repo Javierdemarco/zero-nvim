@@ -24,6 +24,7 @@ local keymap = {
         p = { "<cmd>Glow<cr>", "Markdown Preview" },
         n = { "<cmd>DashboardNewFile<cr>", "New File" },
         P = { "<cmd>Telescope projects<cr>", "Projects" },
+        s = { "<cmd>w<cr>", "Save File" },
     },
     s = {
         name = 'Search',
@@ -88,7 +89,8 @@ local keymap = {
             r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
-        c = { "<cmd>ChADopen"}
+        c = { "<cmd>ChADopen"},
+        g = { "<cmd>LazyGit<cr>", "LazyGit"},
     },
     T = {
         name = "Trouble",
