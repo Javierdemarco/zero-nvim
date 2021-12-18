@@ -1,41 +1,49 @@
--- File Containing the Plugins and their configuration
+-- File Containing the list of plugins
+-- The configuration files are separated
 -- Author: Javier de Marco
 
 return require('packer').startup(function(use)
     -- Packer
     use { "wbthomason/packer.nvim" }
 
-    -----------
-    -- FZF   --
-    -----------
+-----------------------------------------------
+-------------------- FZF   --------------------
+-----------------------------------------------
+
     -- Telescope as Fuzzy Finder
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} },
         after = "telescope_find_directories",
         config = function()
-          require("plugins/telescope")
-        end
+            require("plugins/telescope")
+        end,
+        cmd = { "Telescope" }
     }
+
     -- Fzf Directories
     use {
         "artart222/telescope_find_directories",
-        after = "telescope-fzf-native.nvim"
+        after = "telescope-fzf-native.nvim",
     }
+
     -- Improve telescope performance
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
-    ------------
-    -- LSP    --
-    ------------
+-----------------------------------------------
+-------------------- LSP   --------------------
+-----------------------------------------------
+
     -- LSP config
-    use{
+    use {
        'neovim/nvim-lspconfig',
        event = "BufEnter",
     }
+
     -- Colors for icons in errors and warnigns
     use 'folke/lsp-colors.nvim'
-    -- LSP siganuture enable. See documentafalsese {
+
+    -- LSP siganutures
     use {
         "ray-x/lsp_signature.nvim",
         after = "nvim-lspconfig",
@@ -44,7 +52,15 @@ return require('packer').startup(function(use)
         end
     }
     -- Simbols outline
-    use 'simrat39/symbols-outline.nvim'
+    use {
+        'simrat39/symbols-outline.nvim',
+        cmd = {
+            "SymbolsOutline",
+            "SymbolsOutlineOpen",
+            "SymbolsOutlineClose",
+        }
+    }
+
     -- LSP Installer
     use {
         "williamboman/nvim-lsp-installer",
@@ -54,19 +70,47 @@ return require('packer').startup(function(use)
         end
     }
 
-    ---------------
-    -- MARKDOWN  --
-    ---------------
-    -- Live Preview
+-----------------------------------------------
+----------------- Markdown   ------------------
+-----------------------------------------------
+
+    -- Live Preview on floating window
     use 'ellisonleao/glow.nvim'
+
     -- Preview in Browser
+    -- TODO: Doesnt work
     --use 'iamcco/markdown-preview.nvim'
 
-    --------------
-    -- SINTAX   --
-    --------------
+-----------------------------------------------
+----------------- DEBUG   --------------------
+-----------------------------------------------
+
+    -- Debugger protocol
+    use {
+        'mfussenegger/nvim-dap',
+        event = "BufEnter"
+    }
+
+    -- Debugger UI enhancement
+    use {
+        "rcarriga/nvim-dap-ui",
+        after = "DAPInstall.nvim",
+        config = function()
+            require('plugins.dap')
+        end,
+    }
+    -- Debbugger Installer
+    use {
+        "Pocco81/DAPInstall.nvim",
+        after = 'nvim-dap',
+    }
+
+-----------------------------------------------
+----------------- UI   --------------------
+-----------------------------------------------
+
     -- Better sintax highlight
-    use{
+    use {
         'nvim-treesitter/nvim-treesitter',
         config = function()
             require('plugins/treesitter')
@@ -85,13 +129,15 @@ return require('packer').startup(function(use)
           "TSUpdateSync"
         },
     }
+
     -- Text Objects for Treesitter
-    use{
+    use {
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = "nvim-treesitter",
     }
+
     -- Context when in long function
-    use{
+    use {
        'romgrk/nvim-treesitter-context',
         config = function()
             require('treesitter-context').setup()
@@ -100,41 +146,8 @@ return require('packer').startup(function(use)
         after = "nvim-treesitter",
     }
 
-    --------------
-    -- Terminal --
-    --------------
-    -- Terminal
-    use {
-        "akinsho/toggleterm.nvim",
-        config = function()
-            require('plugins.toggleterm')
-        end,
-    }
-
-    -------------
-    -- DEBUG   --
-    -------------
-    -- Debugger
-    use 'mfussenegger/nvim-dap'
-    -- Debugger UI enhancement
-    use{
-        "rcarriga/nvim-dap-ui",
-        after = "DAPInstall.nvim",
-        config = function()
-            require('plugins.dap')
-        end,
-    }
-    -- Debbugger Installer
-    use{
-        "Pocco81/DAPInstall.nvim",
-        after = 'nvim-dap',
-    }
-
-    -----------
-    -- UI    --
-    -----------
     -- Colors in HEX
-    use{
+    use {
         'norcalli/nvim-colorizer.lua',
         event = "BufEnter",
         config = function()
@@ -145,17 +158,20 @@ return require('packer').startup(function(use)
             vim.cmd("ColorizerAttachToBuffer")
         end,
     }
+
     -- Highlight range of operations
-    use{
+    use {
         'winston0410/range-highlight.nvim',
         config = function()
             require('range-highlight').setup()
         end,
         requires = { 'winston0410/cmd-parser.nvim'},
     }
+
     -- Colorschemes
     use 'sainnhe/gruvbox-material'
     use 'ful1e5/onedark.nvim'
+
     -- Tab bar
     use {
         'romgrk/barbar.nvim',
@@ -164,6 +180,8 @@ return require('packer').startup(function(use)
             require('plugins.status-tab')
         end,
     }
+
+    -- Status Line
     use {
         'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
@@ -171,6 +189,7 @@ return require('packer').startup(function(use)
             require('plugins.status-tab')
         end,
     }
+
     -- Welcome screen in Neovim
     use {
         'glepnir/dashboard-nvim',
@@ -189,6 +208,7 @@ return require('packer').startup(function(use)
           require('plugins.dashboard')
         end
     }
+
     -- Indentation guides
     use{
         "lukas-reineke/indent-blankline.nvim",
@@ -197,9 +217,23 @@ return require('packer').startup(function(use)
         end,
     }
 
-    -------------
-    -- UTILITY --
-    -------------
+
+-----------------------------------------------
+----------------- UTILITY   --------------------
+-----------------------------------------------
+
+    -- Terminal
+    use {
+        "akinsho/toggleterm.nvim",
+        config = function()
+            require('plugins.toggleterm')
+        end,
+        cmd = {
+            "ToggleTerm",
+            "ToggleTermAll",
+        }
+    }
+
     -- Partial Code Run
     use {
         'michaelb/sniprun',
@@ -208,42 +242,57 @@ return require('packer').startup(function(use)
                 display = {
                     "VirtualTextOk",
                     "VirtualTextErr",
-                    -- "TempFloatingWindow",
                     "LongTempFloatingWindow",
+                    "Terminal",
                 }
             }
         end,
-
-        run = 'bash ./install.sh'
+        run = 'bash ./install.sh',
+        cmd = "SnipRun",
     }
+
     -- Startup time
-    use 'dstein64/vim-startuptime'
+    use {
+        'dstein64/vim-startuptime',
+        cmd = "StartupTime"
+    }
+
     -- Keybinding lookup with FZF
     use {
-      'sudormrfbin/cheatsheet.nvim',
-      requires = {
-        {'nvim-telescope/telescope.nvim'},
-        {'nvim-lua/popup.nvim'},
-        {'nvim-lua/plenary.nvim'},
-      }
+        'sudormrfbin/cheatsheet.nvim',
+        requires = {
+            {'nvim-telescope/telescope.nvim'},
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'},
+        },
+        cmd = "Cheatsheet",
     }
+
     -- Dev icons in ui
     use 'kyazdani42/nvim-web-devicons'
+
     -- Ranger inside nvim
-    use{
+    use {
         'kevinhwang91/rnvimr',
         config = function()
             require('plugins.ranger')
         end,
+        cmd = {
+            "RnvimrToggle",
+            "RnvimrResize",
+        }
     }
+
     -- File Tree
-    use{
+    use {
         'ms-jpq/chadtree',
         config = function()
             require('plugins.chadtree')
         end,
+        cmd = "CHADopen"
     }
-      use {
+    -- Another File Tree
+    use {
         "kyazdani42/nvim-tree.lua",
         cmd = {
           "NvimTreeOpen",
@@ -253,31 +302,41 @@ return require('packer').startup(function(use)
         config = function()
           require("plugins/nvim-tree")
         end
-      }
+    }
+
     -- Preatty list for showing things related to errors and warnings
     use {
-      "folke/trouble.nvim",
-      requires = "kyazdani42/nvim-web-devicons",
-      config = function()
-        require("trouble").setup {
-            auto_preview = false
+        "folke/trouble.nvim",
+        requires = "kyazdani42/nvim-web-devicons",
+        config = function()
+            require("trouble").setup {
+                auto_preview = false
+            }
+        end,
+        cmd = {
+            "Trouble",
+            "TroubleToggle",
+
         }
-      end
     }
-    -- Better Search indicates number of mathces
-    use {'kevinhwang91/nvim-hlslens'}
+
+    -- Better Search indicates number of matches
+    use 'kevinhwang91/nvim-hlslens'
+
     -- Project Management
     use {
-      "ahmedkhalf/project.nvim",
-      config = function()
-        require("project_nvim").setup {
-            manual_root = true,
-            silent_chdir = false,
-        }
-      end
+        "ahmedkhalf/project.nvim",
+        config = function()
+            require("project_nvim").setup {
+                manual_root = true,
+                silent_chdir = false,
+            }
+        end,
+        after = "telescope",
     }
+
     -- Better Command Line
-    use{
+    use {
         'gelguy/wilder.nvim',
         config = function()
             require('plugins.wilder')
@@ -285,44 +344,79 @@ return require('packer').startup(function(use)
         requires = {"romgrk/fzy-lua-native"}
     }
     -- Testing
-    -- TODO: Check
+    -- TODO: Install and check functionallity
     --use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+
     -- Keybinding configuration
     use {
-      "folke/which-key.nvim",
-      config = function()
-        require("which-key").setup {
-            popup_mappings = {
-                scroll_down = '<Tab>', -- binding to scroll down inside the popup
-                scroll_up = '<s-Tab>', -- binding to scroll up inside the popup
-            },
-        }
-      end
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup{}
+        end,
+        cmd = "WhichKey"
     }
-    -- Rearrange Windows
-    use 'sindrets/winshift.nvim'
 
-    ------------
-    -- GIT    --
-    -----------
+    -- Rearrange Windows
+    use {
+        'sindrets/winshift.nvim',
+        cmd = "WinShift",
+    }
+
+-----------------------------------------------
+----------------- GIT   ----------------------
+-----------------------------------------------
+
     -- Git Blame on changes
     use 'f-person/git-blame.nvim'
+
     -- Lazygit inside vim
-    use 'kdheepak/lazygit.nvim'
+    use {
+        'kdheepak/lazygit.nvim',
+        cmd = "Lazygit"
+    }
+
     -- Git Signs on lines
     use {
         'lewis6991/gitsigns.nvim',
-        requires = {
-            'nvim-lua/plenary.nvim'
-        },
+        requires = {'nvim-lua/plenary.nvim'},
         config = function()
             require('gitsigns').setup()
         end
     }
 
-    --------------
-    -- COMMENTS --
-    --------------
+
+-----------------------------------------------
+------------- EDITING TOOLS   -----------------
+-----------------------------------------------
+
+    -- Surrond operations
+    -- TODO: modifiy surrond works, add surrond doesnt
+    use {
+        'blackCauldron7/surround.nvim',
+        config = function()
+            require('surround').setup{
+                mappings_style = "sandwich"
+            }
+        end,
+    }
+
+    -- Multiple Cursor
+    use 'terryma/vim-multiple-cursors'
+
+    -- Autopair
+    use {
+        'windwp/nvim-autopairs',
+        config = function()
+            require('nvim-autopairs').setup{}
+        end,
+    }
+    -- Delete Trailing Spaces and Lines
+    use "McAuleyPenney/tidy.nvim"
+
+    -- FORMATER
+    -- TODO: doesnt work
+    use 'sbdchd/neoformat'
+
     -- Comments made easy
     use {
         'numToStr/Comment.nvim',
@@ -330,14 +424,16 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     }
+
     -- TODO highlighting
     use {
-      "folke/todo-comments.nvim",
-      requires = "nvim-lua/plenary.nvim",
-      config = function()
-        require("todo-comments").setup{}
-      end
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("todo-comments").setup{}
+        end
     }
+
     -- Generating Awesome Comments
     -- TODO: doesnt work
 --    use {
@@ -359,64 +455,66 @@ return require('packer').startup(function(use)
    --     requires = "nvim-treesitter/nvim-treesitter"
    -- }
 
-    -------------------
-    -- EDITING TOOLS --
-    -------------------
-    -- Surrond operations
-    -- TODO: doesnt work
-    use{
-        'blackCauldron7/surround.nvim',
-        config = function()
-            require('surround').setup{
-                mappings_style = "sandwich"
-            }
-        end,
-    }
-    -- Multiple Cursor
-    use 'terryma/vim-multiple-cursors'
-    -- Autopair
-    use{
-        'windwp/nvim-autopairs',
-        config = function()
-            require('nvim-autopairs').setup{}
-        end,
-    }
-    -- Delete Trailing Spaces and Lines
-    use "McAuleyPenney/tidy.nvim"
-    -- FORMATER
-    -- TODO: doesnt work
-    use 'sbdchd/neoformat'
+-----------------------------------------------
+---------------- COMPLETION   -----------------
+-----------------------------------------------
 
-    ------------------
-    --  COMPLETION  --
-    ------------------
+    -- Completion
     use {
         'hrsh7th/nvim-cmp',
         config = function()
             require('plugins/nvim-cmp')
         end,
     }
+
+    -- Completion Addons
     use {
         "hrsh7th/cmp-nvim-lsp",
         after = "nvim-lsp-installer"
     }
-    use 'onsails/lspkind-nvim'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'lukas-reineke/cmp-under-comparator'
-    use { 'saadparwaiz1/cmp_luasnip' }
+    use {
+        'onsails/lspkind-nvim',
+        after = "nvim-cmp",
+    }
+    use {
+        'hrsh7th/cmp-buffer',
+        after = "nvim-cmp",
+    }
+    use {
+        'hrsh7th/cmp-path',
+        after = "nvim-cmp",
+    }
+    use {
+        'hrsh7th/cmp-cmdline',
+        after = "nvim-cmp",
+    }
+    use {
+        'hrsh7th/cmp-nvim-lua',
+        after = "nvim-cmp",
+    }
+    use {
+        'lukas-reineke/cmp-under-comparator',
+        after = "nvim-cmp",
+    }
+    use {
+        'saadparwaiz1/cmp_luasnip',
+        after = "nvim-cmp",
+    }
+
+    -- Snippets
+    -- TODO: it doesn work
     use {
         'L3MON4D3/LuaSnip',
         config = function()
             require('plugins.luasnip')
         end,
         wants = "friendly-snippets",
-        after = "nvim-cmp"
+        after = "nvim-cmp",
     }
     use {
         "rafamadriz/friendly-snippets",
         event = "InsertEnter",
+        after = "luasnip",
     }
 end)
+--EOF
