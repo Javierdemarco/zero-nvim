@@ -35,7 +35,7 @@ return require('packer').startup(function(use)
     }
     -- Colors for icons in errors and warnigns
     use 'folke/lsp-colors.nvim'
-    -- LSP siganuture enable. See documentation when typing
+    -- LSP siganuture enable. See documentafalsese {
     use {
         "ray-x/lsp_signature.nvim",
         after = "nvim-lspconfig",
@@ -372,7 +372,8 @@ return require('packer').startup(function(use)
             }
         end,
     }
-
+    -- Multiple Cursor
+    use 'terryma/vim-multiple-cursors'
     -- Autopair
     use{
         'windwp/nvim-autopairs',
@@ -411,6 +412,11 @@ return require('packer').startup(function(use)
         config = function()
             require('plugins.luasnip')
         end,
+        wants = "friendly-snippets",
         after = "nvim-cmp"
+    }
+    use {
+        "rafamadriz/friendly-snippets",
+        event = "InsertEnter",
     }
 end)
