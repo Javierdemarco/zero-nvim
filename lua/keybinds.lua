@@ -89,7 +89,7 @@ local keymap = {
             r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
-        c = { "<cmd>ChADopen"},
+        c = { "<cmd>CHADopen<cr>"},
         g = { "<cmd>LazyGit<cr>", "LazyGit"},
     },
     T = {

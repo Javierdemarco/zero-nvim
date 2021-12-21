@@ -18,7 +18,6 @@ return require('packer').startup(function(use)
         config = function()
             require("plugins/telescope")
         end,
-        cmd = { "Telescope" }
     }
 
     -- Fzf Directories
@@ -69,6 +68,9 @@ return require('packer').startup(function(use)
           require("plugins/lsp")
         end
     }
+
+    -- Language packs
+    use 'sheerun/vim-polyglot'
 
 -----------------------------------------------
 ----------------- Markdown   ------------------
@@ -222,16 +224,20 @@ return require('packer').startup(function(use)
 ----------------- UTILITY   --------------------
 -----------------------------------------------
 
+    -- Plantuml Plugin
+    use {
+        'weirongxu/plantuml-previewer.vim',
+        requires = { 'aklt/plantuml-syntax', 'tyru/open-browser.vim'}
+    }
+
+
+
     -- Terminal
     use {
         "akinsho/toggleterm.nvim",
         config = function()
             require('plugins.toggleterm')
         end,
-        cmd = {
-            "ToggleTerm",
-            "ToggleTermAll",
-        }
     }
 
     -- Partial Code Run
@@ -248,13 +254,11 @@ return require('packer').startup(function(use)
             }
         end,
         run = 'bash ./install.sh',
-        cmd = "SnipRun",
     }
 
     -- Startup time
     use {
         'dstein64/vim-startuptime',
-        cmd = "StartupTime"
     }
 
     -- Keybinding lookup with FZF
@@ -265,7 +269,6 @@ return require('packer').startup(function(use)
             {'nvim-lua/popup.nvim'},
             {'nvim-lua/plenary.nvim'},
         },
-        cmd = "Cheatsheet",
     }
 
     -- Dev icons in ui
@@ -277,10 +280,6 @@ return require('packer').startup(function(use)
         config = function()
             require('plugins.ranger')
         end,
-        cmd = {
-            "RnvimrToggle",
-            "RnvimrResize",
-        }
     }
 
     -- File Tree
@@ -289,7 +288,6 @@ return require('packer').startup(function(use)
         config = function()
             require('plugins.chadtree')
         end,
-        cmd = "CHADopen"
     }
     -- Another File Tree
     use {
@@ -313,11 +311,6 @@ return require('packer').startup(function(use)
                 auto_preview = false
             }
         end,
-        cmd = {
-            "Trouble",
-            "TroubleToggle",
-
-        }
     }
 
     -- Better Search indicates number of matches
@@ -332,7 +325,6 @@ return require('packer').startup(function(use)
                 silent_chdir = false,
             }
         end,
-        after = "telescope",
     }
 
     -- Better Command Line
@@ -353,13 +345,11 @@ return require('packer').startup(function(use)
         config = function()
             require("which-key").setup{}
         end,
-        cmd = "WhichKey"
     }
 
     -- Rearrange Windows
     use {
         'sindrets/winshift.nvim',
-        cmd = "WinShift",
     }
 
 -----------------------------------------------
@@ -372,7 +362,6 @@ return require('packer').startup(function(use)
     -- Lazygit inside vim
     use {
         'kdheepak/lazygit.nvim',
-        cmd = "Lazygit"
     }
 
     -- Git Signs on lines
@@ -472,34 +461,13 @@ return require('packer').startup(function(use)
         "hrsh7th/cmp-nvim-lsp",
         after = "nvim-lsp-installer"
     }
-    use {
-        'onsails/lspkind-nvim',
-        after = "nvim-cmp",
-    }
-    use {
-        'hrsh7th/cmp-buffer',
-        after = "nvim-cmp",
-    }
-    use {
-        'hrsh7th/cmp-path',
-        after = "nvim-cmp",
-    }
-    use {
-        'hrsh7th/cmp-cmdline',
-        after = "nvim-cmp",
-    }
-    use {
-        'hrsh7th/cmp-nvim-lua',
-        after = "nvim-cmp",
-    }
-    use {
-        'lukas-reineke/cmp-under-comparator',
-        after = "nvim-cmp",
-    }
-    use {
-        'saadparwaiz1/cmp_luasnip',
-        after = "nvim-cmp",
-    }
+    use 'onsails/lspkind-nvim'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'lukas-reineke/cmp-under-comparator'
+    use 'saadparwaiz1/cmp_luasnip'
 
     -- Snippets
     -- TODO: it doesn work
@@ -509,12 +477,10 @@ return require('packer').startup(function(use)
             require('plugins.luasnip')
         end,
         wants = "friendly-snippets",
-        after = "nvim-cmp",
     }
     use {
         "rafamadriz/friendly-snippets",
         event = "InsertEnter",
-        after = "luasnip",
     }
 end)
 --EOF
