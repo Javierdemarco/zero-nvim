@@ -64,6 +64,7 @@ local keymap = {
     g = {
         name = 'Git',
         b = { "<cmd>Telescope git_branches<cr>", "Git Branches" },
+        g = { "<cmd>LazyGit<cr>", "LazyGit"},
     },
     l = {
         name = "LSP",
@@ -89,8 +90,8 @@ local keymap = {
             r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
-        c = { "<cmd>CHADopen<cr>"},
-        g = { "<cmd>LazyGit<cr>", "LazyGit"},
+        c = { "<cmd>CHADopen<cr>", "CHADTree"},
+        p = {"<cmd>PlantumlToggle<cr>", "PlantUml Toggle"},
     },
     T = {
         name = "Trouble",
