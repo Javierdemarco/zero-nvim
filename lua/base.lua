@@ -70,10 +70,14 @@ opt.clipboard = 'unnamedplus'
 -- Python interpreter
 g.python3_host_prog = "/bin/python"
 
+-- Auto cd into file
+opt.autochdir = true
+
 -- Auto open CHADTree when writing (nvim .) in command line
 -- and auto open Dashboard when nothing given as argument.
 vim.cmd
 [[
+"autocmd BufEnter * silent! lcd %:p:h
 if index(argv(), ".") >= 0
   autocmd VimEnter * CHADopen
   bd1
