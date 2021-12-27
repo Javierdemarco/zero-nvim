@@ -16,7 +16,7 @@ opt.mouse = "a" -- Enable mouse support
 -- GUI
 opt.showtabline = 2 -- TabLine
 opt.cmdheight = 2 -- CMD height
-opt.guifont = "FiraCode Nerd Font" -- FontS
+opt.guifont = "CaskaydiaCove Nerd Font" -- FontS
 opt.showmode = false -- Turn of Showmode
 opt.nu = true -- Line Numbers
 opt.rnu = true -- Line relative numbers mode
