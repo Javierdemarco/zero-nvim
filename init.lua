@@ -2,6 +2,6 @@ require('base')
 require('plugins')
 require('keybinds')
 vim.cmd[[
-    colorscheme onedark
+    colorscheme nord
     syntax on
 ]]

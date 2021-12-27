@@ -111,6 +111,14 @@ return require('packer').startup(function(use)
 ----------------- UI   --------------------
 -----------------------------------------------
 
+    -- Smooth scroll
+    use {
+        'karb94/neoscroll.nvim',
+        config = function()
+            require('neoscroll').setup()
+        end,
+    }
+
     -- Better sintax highlight
     use {
         'nvim-treesitter/nvim-treesitter',
@@ -173,6 +181,7 @@ return require('packer').startup(function(use)
     -- Colorschemes
     use 'sainnhe/gruvbox-material'
     use 'ful1e5/onedark.nvim'
+    use 'shaunsingh/nord.nvim'
 
     -- Tab bar
     use {
@@ -224,13 +233,15 @@ return require('packer').startup(function(use)
 ----------------- UTILITY   --------------------
 -----------------------------------------------
 
+    -- Motion enhancer
+    -- TODO: keybind s collides with surrond
+    use 'ggandor/lightspeed.nvim'
+
     -- Plantuml Plugin
     use {
         'weirongxu/plantuml-previewer.vim',
         requires = { 'aklt/plantuml-syntax', 'tyru/open-browser.vim'}
     }
-
-
 
     -- Terminal
     use {
@@ -372,6 +383,9 @@ return require('packer').startup(function(use)
             require('gitsigns').setup()
         end
     }
+
+    -- Neogit
+    -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
 
 
 -----------------------------------------------
