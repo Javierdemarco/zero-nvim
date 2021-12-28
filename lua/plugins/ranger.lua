@@ -10,7 +10,7 @@ g.rnvimr_enable_x = 1
 g.rnvimr_enable_picker = 1
 
 --Hide files included in gitignore
-g.rnvimr_hide_gitignore = 1
+g.rnvimr_hide_gitignore = 0
 
 -- Delete buffer if ranger deletes file
 g.rnvimr_enable_bw = 1

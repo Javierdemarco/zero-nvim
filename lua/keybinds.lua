@@ -19,6 +19,7 @@ local keymap = {
         name = 'File',
         d = { "<cmd>Telescope find_directories<cr>", "Find Directory" },
         f = { "<cmd>Telescope find_files<cr>", "Find Files" },
+        F = { "<cmd>NvimTreeFindFilecr>", "Find Files NvimTree" },
         r = { "<cmd>Telescope oldfiles<cr>", "Recent Files" },
         b = { "<cmd> Telescope file_browser<cr>", "File Browser" },
         p = { "<cmd>Glow<cr>", "Markdown Preview" },
@@ -90,7 +91,6 @@ local keymap = {
             r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
-        c = { "<cmd>CHADopen<cr>", "CHADTree"},
         p = {"<cmd>PlantumlToggle<cr>", "PlantUml"},
         n = { "<cmd>NvimTreeToggle<cr>", "NvimTree"}
     },

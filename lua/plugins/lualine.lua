@@ -10,7 +10,7 @@ end
 -- Tab Bar config
 vim.g.bufferline = {
     -- Excludes buffers from the tabline
-    exclude_ft = {'wiler', 'dap'},
+    exclude_ft = {'wiler', 'dap', 'dashboard'},
     exclude_name = {''},
 }
 
@@ -27,7 +27,9 @@ lualine.setup{
               "dapui_breakpoints",
               "dapui_stacks",
               "dapui_watches",
-              "dap-repl"
+              "dap-repl",
+              "nvimtree",
+              "dashboard",
         },
         always_divide_middle = false,
       },
@@ -48,5 +50,5 @@ lualine.setup{
         lualine_z = {}
       },
       tabline = {},
-      extensions = {'chadtree'}
+      extensions = {'fzf', 'nvim-tree', 'quickfix', 'toggleterm', 'symbols-outline'}
 }

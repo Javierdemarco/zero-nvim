@@ -8,13 +8,14 @@ g.dashboard_disable_statusline = 1
 g.dashboard_default_executive = "telescope"
 
 g.dashboard_custom_header = {
-"                                                                    ",
-"         __________ ____   ___   __     _____ __  __                ",
-"        |__  / ____|  _ \\ / _ \\  \\ \\   / /_ _|  \\/  |               ",
-" _____    / /|  _| | |_) | | | |  \\ \\ / / | || |\\/| |  _____        ",
-"|_____|  / /_| |___|  _ <| |_| |   \\ V /  | || |  | | |_____|       ",
-"        /____|_____|_| \\_ \\___/     \\_/  |___|_|  |_|               ",
-"                                                                    ",
+"                                              ",
+"    ███████╗███████╗██████╗ ██╗███╗   ███╗    ",
+"    ╚══███╔╝██╔════╝██╔══██╗██║████╗ ████║    ",
+"      ███╔╝ █████╗  ██████╔╝██║██╔████╔██║    ",
+"     ███╔╝  ██╔══╝  ██╔══██╗██║██║╚██╔╝██║    ",
+"    ███████╗███████╗██║  ██║██║██║ ╚═╝ ██║    ",
+"    ╚══════╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝     ╚═╝    ",
+"                                              ",
 }
 
 g.dashboard_custom_section = {
@@ -30,8 +31,8 @@ g.dashboard_custom_section = {
 
 g.dashboard_custom_footer = {
     " ",
-    "ZeroVim Loaded",
-    "ZeroVim v0.1"
+    "Zerim Loaded",
+    "Zerim v0.1"
 }
 
 -- Disable statusline and cursorline in dashboard.

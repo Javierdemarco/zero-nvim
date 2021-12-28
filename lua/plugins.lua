@@ -188,7 +188,7 @@ return require('packer').startup(function(use)
         'romgrk/barbar.nvim',
         requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-            require('plugins.status-tab')
+            require('plugins.lualine')
         end,
     }
 
@@ -197,7 +197,7 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function()
-            require('plugins.status-tab')
+            require('plugins.lualine')
         end,
     }
 
@@ -293,14 +293,7 @@ return require('packer').startup(function(use)
         end,
     }
 
-    -- File Tree
-    use {
-        'ms-jpq/chadtree',
-        config = function()
-            require('plugins.chadtree')
-        end,
-    }
-    -- Another File Tree
+    -- NvimTree as Filetree
     use {
         "kyazdani42/nvim-tree.lua",
         cmd = {
