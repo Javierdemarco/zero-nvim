@@ -91,7 +91,8 @@ local keymap = {
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
         c = { "<cmd>CHADopen<cr>", "CHADTree"},
-        p = {"<cmd>PlantumlToggle<cr>", "PlantUml Toggle"},
+        p = {"<cmd>PlantumlToggle<cr>", "PlantUml"},
+        n = { "<cmd>NvimTreeToggle<cr>", "NvimTree"}
     },
     T = {
         name = "Trouble",

@@ -328,16 +328,16 @@ return require('packer').startup(function(use)
     use 'kevinhwang91/nvim-hlslens'
 
     -- Project Management
-    use {
-        "ahmedkhalf/project.nvim",
-        config = function()
-            require("project_nvim").setup {
-                manual_root = true,
-                silent_chdir = false,
-            }
-        end,
-    }
-
+    -- use {
+    --     "ahmedkhalf/project.nvim",
+    --     config = function()
+    --         require("project_nvim").setup {
+    --             manual_root = true,
+    --             silent_chdir = false,
+    --         }
+    --     end,
+    -- }
+    --
     -- Better Command Line
     use {
         'gelguy/wilder.nvim',
