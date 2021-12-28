@@ -29,9 +29,9 @@ nvim_treesitter.setup {
 
 vim.cmd
 [[
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevel=99
+    set foldmethod=expr
+    set foldexpr=nvim_treesitter#foldexpr()
+    set foldlevel=99
 ]]
 --TSInstall bash
 --TSInstall c

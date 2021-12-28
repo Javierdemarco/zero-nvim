@@ -90,7 +90,7 @@ return require('packer').startup(function(use)
     -- Debugger protocol
     use {
         'mfussenegger/nvim-dap',
-        event = "BufEnter"
+        -- event = "BufEnter"
     }
 
     -- Debugger UI enhancement
@@ -232,6 +232,14 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 ----------------- UTILITY   --------------------
 -----------------------------------------------
+
+    -- Zoxide integration with telescope
+    use 'jvgrootveld/telescope-zoxide'
+
+    -- Nvim-Dap integration with telescope
+    use {
+        'nvim-telescope/telescope-dap.nvim',
+    }
 
     -- Motion enhancer
     -- TODO: keybind s collides with surrond

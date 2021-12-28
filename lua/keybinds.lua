@@ -18,14 +18,15 @@ local keymap = {
     f = {
         name = 'File',
         d = { "<cmd>Telescope find_directories<cr>", "Find Directory" },
-        f = { "<cmd>Telescope find_files<cr>", "Find Files" },
-        F = { "<cmd>NvimTreeFindFilecr>", "Find Files NvimTree" },
+        f = { "<cmd>Telescope file_browser<cr>", "Find Files" },
+        F = { "<cmd>Telescope find_files<cr>", "Find Files Git" },
         r = { "<cmd>Telescope oldfiles<cr>", "Recent Files" },
         b = { "<cmd> Telescope file_browser<cr>", "File Browser" },
         p = { "<cmd>Glow<cr>", "Markdown Preview" },
         n = { "<cmd>DashboardNewFile<cr>", "New File" },
         P = { "<cmd>Telescope projects<cr>", "Projects" },
         s = { "<cmd>w<cr>", "Save File" },
+        D = { "<cmd>Telescope zoxide list<cr>", "List Zoxide Directories" },
     },
     s = {
         name = 'Search',
@@ -74,6 +75,10 @@ local keymap = {
         D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Jump To Declaraion" },
         h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover Info" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename Symbol" },
+        R = { "<cmd>Telescope lsp_references<cr>", "Telescope References" },
+        s = { "<cmd>Telescope lsp_document_symbols<cr>", "Telescope Document Symbols" },
+        S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Telescope Workspace Symbols" },
+        t = { "<cmd>Telescope treesitter<cr>", "Telescope Treesitter" },
 
     },
     t = {
@@ -117,6 +122,7 @@ local keymap = {
         r = { ":lua require(\"dap\").run_to_cursor()<CR>", "Run To Cursor"},
         T = { ":lua require(\"dapui\").toggle()<CR>", "Toggle DAP UI"},
         R = { ":lua require(\"dap\").run_last()<CR>", "Run Last"},
+        B = { "<cmd>Telescope dap list_breakpoints<CR>", "List Breakpoints"},
     },
     w = {
         name = "Windows",
