@@ -67,6 +67,13 @@ local keymap = {
         b = { "<cmd>Telescope git_branches<cr>", "Git Branches" },
         g = { "<cmd>LazyGit<cr>", "LazyGit"},
     },
+    G = {
+        name = 'Godot',
+            r = { "<cmd>GodotRun<cr>", "Godot Run"},
+            R = { "<cmd>GodotRunLast<cr>", "Godot Run Last"},
+            c = { "<cmd>GodotRunCurrent<cr>", "Godot Run Current"},
+            f = { "<cmd>GodotRunFZF<cr>", "Godot Run FZF"},
+    },
     l = {
         name = "LSP",
         i = { "<cmd>LspInstall<cr>", "Install Langauge Server" },
