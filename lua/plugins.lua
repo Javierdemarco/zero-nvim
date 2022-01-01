@@ -33,23 +33,26 @@ return require('packer').startup(function(use)
 -------------------- LSP   --------------------
 -----------------------------------------------
 
+    -- COC LSP
+    use {'neoclide/coc.nvim', branch = 'release'}
+
     -- LSP config
-    use {
-       'neovim/nvim-lspconfig',
-       event = "BufEnter",
-    }
+    -- use {
+    --    'neovim/nvim-lspconfig',
+    --    event = "BufEnter",
+    -- }
 
     -- Colors for icons in errors and warnigns
-    use 'folke/lsp-colors.nvim'
+    -- use 'folke/lsp-colors.nvim'
 
     -- LSP siganutures
-    use {
-        "ray-x/lsp_signature.nvim",
-        after = "nvim-lspconfig",
-        config = function ()
-          require("lsp_signature").setup()
-        end
-    }
+    -- use {
+    --     "ray-x/lsp_signature.nvim",
+    --     after = "nvim-lspconfig",
+    --     config = function ()
+    --       require("lsp_signature").setup()
+    --     end
+    -- }
     -- Simbols outline
     use {
         'simrat39/symbols-outline.nvim',
@@ -61,13 +64,13 @@ return require('packer').startup(function(use)
     }
 
     -- LSP Installer
-    use {
-        "williamboman/nvim-lsp-installer",
-        after = "nvim-lspconfig",
-        config = function()
-          require("plugins/lsp")
-        end
-    }
+    -- use {
+    --     "williamboman/nvim-lsp-installer",
+    --     after = "nvim-lspconfig",
+    --     config = function()
+    --       require("plugins/lsp")
+    --     end
+    -- }
 
     -- Language packs
     use 'sheerun/vim-polyglot'
@@ -233,6 +236,7 @@ return require('packer').startup(function(use)
 ----------------- UTILITY   --------------------
 -----------------------------------------------
 
+<<<<<<< HEAD
     -- Zoxide integration with telescope
     use 'jvgrootveld/telescope-zoxide'
 
@@ -240,6 +244,10 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope-dap.nvim',
     }
+=======
+    -- GODOT engine integration
+    use 'habamax/vim-godot'
+>>>>>>> a5ab055599e4b40c83c26f4f1f09fc4cfa1ade70
 
     -- Motion enhancer
     -- TODO: keybind s collides with surrond
@@ -464,38 +472,38 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 
     -- Completion
-    use {
-        'hrsh7th/nvim-cmp',
-        config = function()
-            require('plugins/nvim-cmp')
-        end,
-    }
+    -- use {
+    --     'hrsh7th/nvim-cmp',
+    --     config = function()
+    --         require('plugins/nvim-cmp')
+    --     end,
+    -- }
 
     -- Completion Addons
-    use {
-        "hrsh7th/cmp-nvim-lsp",
-        after = "nvim-lsp-installer"
-    }
-    use 'onsails/lspkind-nvim'
-    use 'hrsh7th/cmp-buffer'
-    use 'hrsh7th/cmp-path'
-    use 'hrsh7th/cmp-cmdline'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'lukas-reineke/cmp-under-comparator'
-    use 'saadparwaiz1/cmp_luasnip'
+    -- use {
+    --     "hrsh7th/cmp-nvim-lsp",
+    --     after = "nvim-lsp-installer"
+    -- }
+    -- use 'onsails/lspkind-nvim'
+    -- use 'hrsh7th/cmp-buffer'
+    -- use 'hrsh7th/cmp-path'
+    -- use 'hrsh7th/cmp-cmdline'
+    -- use 'hrsh7th/cmp-nvim-lua'
+    -- use 'lukas-reineke/cmp-under-comparator'
+    -- use 'saadparwaiz1/cmp_luasnip'
 
     -- Snippets
     -- TODO: it doesn work
-    use {
-        'L3MON4D3/LuaSnip',
-        config = function()
-            require('plugins.luasnip')
-        end,
-        wants = "friendly-snippets",
-    }
-    use {
-        "rafamadriz/friendly-snippets",
-        event = "InsertEnter",
-    }
+    -- use {
+    --     'L3MON4D3/LuaSnip',
+    --     config = function()
+    --         require('plugins.luasnip')
+    --     end,
+    --     wants = "friendly-snippets",
+    -- }
+    -- use {
+    --     "rafamadriz/friendly-snippets",
+    --     event = "InsertEnter",
+    -- }
 end)
 --EOF
