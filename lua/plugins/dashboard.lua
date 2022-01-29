@@ -32,7 +32,6 @@ g.dashboard_custom_section = {
 g.dashboard_custom_footer = {
     " ",
     "Zerim Loaded",
-    "Zerim v0.1"
 }
 
 -- Disable statusline and cursorline in dashboard.

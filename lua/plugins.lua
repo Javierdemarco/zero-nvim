@@ -7,7 +7,7 @@ return require('packer').startup(function(use)
     use { "wbthomason/packer.nvim" }
 
 -----------------------------------------------
--------------------- FZF   --------------------
+------------------- FZF   --------------------
 -----------------------------------------------
 
     -- Telescope as Fuzzy Finder
@@ -16,7 +16,7 @@ return require('packer').startup(function(use)
         requires = { {'nvim-lua/plenary.nvim'} },
         after = "telescope_find_directories",
         config = function()
-            require("plugins/telescope")
+            require("plugins.telescope")
         end,
     }
 
@@ -29,51 +29,40 @@ return require('packer').startup(function(use)
     -- Improve telescope performance
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
 
+
+
 -----------------------------------------------
 -------------------- LSP   --------------------
 -----------------------------------------------
 
     -- COC LSP
-    use {'neoclide/coc.nvim', branch = 'release'}
+    --use {'neoclide/coc.nvim', branch = 'release'}
 
-    -- LSP config
-    -- use {
-    --    'neovim/nvim-lspconfig',
-    --    event = "BufEnter",
-    -- }
+    use {'ms-jpq/coq_nvim', branch = 'coq',
+        config = function()
+            require("plugins.coq")
+        end
+    }
+    use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
+    use {'ms-jpq/coq.thirdparty',  branch = '3p'}
 
     -- Colors for icons in errors and warnigns
-    -- use 'folke/lsp-colors.nvim'
-
-    -- LSP siganutures
-    -- use {
-    --     "ray-x/lsp_signature.nvim",
-    --     after = "nvim-lspconfig",
-    --     config = function ()
-    --       require("lsp_signature").setup()
-    --     end
-    -- }
-    -- Simbols outline
-    use {
-        'simrat39/symbols-outline.nvim',
-        cmd = {
-            "SymbolsOutline",
-            "SymbolsOutlineOpen",
-            "SymbolsOutlineClose",
-        }
-    }
-
-    -- LSP Installer
-    -- use {
-    --     "williamboman/nvim-lsp-installer",
-    --     after = "nvim-lspconfig",
-    --     config = function()
-    --       require("plugins/lsp")
-    --     end
-    -- }
+    use 'folke/lsp-colors.nvim'
 
     -- Language packs
     use 'sheerun/vim-polyglot'
+
+    use {'neovim/nvim-lspconfig',
+        config = function()
+            require('plugins.lsp')
+        end
+    }
+
+    use 'liuchengxu/vista.vim'
+    use 'simrat39/symbols-outline.nvim'
+
+    -- LSP like actions
+    use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
 
 -----------------------------------------------
 ----------------- Markdown   ------------------
@@ -93,7 +82,7 @@ return require('packer').startup(function(use)
     -- Debugger protocol
     use {
         'mfussenegger/nvim-dap',
-        -- event = "BufEnter"
+        --event = "BufEnter"
     }
 
     -- Debugger UI enhancement
@@ -122,11 +111,14 @@ return require('packer').startup(function(use)
         end,
     }
 
+    -- MInimap
+    use 'wfxr/minimap.vim'
+
     -- Better sintax highlight
     use {
         'nvim-treesitter/nvim-treesitter',
         config = function()
-            require('plugins/treesitter')
+            require('plugins.treesitter')
         end,
         run = ":TSUpdate",
         event = "BufEnter",
@@ -144,20 +136,20 @@ return require('packer').startup(function(use)
     }
 
     -- Text Objects for Treesitter
-    use {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        after = "nvim-treesitter",
-    }
+    -- use {
+    --     'nvim-treesitter/nvim-treesitter-textobjects',
+    --     after = "nvim-treesitter",
+    -- }
 
     -- Context when in long function
-    use {
-       'romgrk/nvim-treesitter-context',
-        config = function()
-            require('treesitter-context').setup()
-            vim.cmd('TSContextEnable')
-        end,
-        after = "nvim-treesitter",
-    }
+    -- use {
+    --    'romgrk/nvim-treesitter-context',
+    --     config = function()
+    --         require('treesitter-context').setup()
+    --         vim.cmd('TSContextEnable')
+    --     end,
+    --     after = "nvim-treesitter",
+    -- }
 
     -- Colors in HEX
     use {
@@ -185,13 +177,16 @@ return require('packer').startup(function(use)
     use 'sainnhe/gruvbox-material'
     use 'ful1e5/onedark.nvim'
     use 'shaunsingh/nord.nvim'
+    use 'ayu-theme/ayu-vim'
+    use 'sonph/onehalf'
+    use 'frenzyexists/aquarium-vim'
 
     -- Tab bar
     use {
         'romgrk/barbar.nvim',
         requires = {'kyazdani42/nvim-web-devicons'},
         config = function()
-            require('plugins.lualine')
+            require('plugins.barbar')
         end,
     }
 
@@ -200,8 +195,9 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = {'kyazdani42/nvim-web-devicons', opt = true},
         config = function()
-            require('plugins.lualine')
+            require('plugins.lualine2')
         end,
+        options = { theme = 'ayu-mirage' }
     }
 
     -- Welcome screen in Neovim
@@ -236,18 +232,16 @@ return require('packer').startup(function(use)
 ----------------- UTILITY   --------------------
 -----------------------------------------------
 
-<<<<<<< HEAD
     -- Zoxide integration with telescope
     use 'jvgrootveld/telescope-zoxide'
 
     -- Nvim-Dap integration with telescope
-    use {
-        'nvim-telescope/telescope-dap.nvim',
-    }
-=======
+    -- use {
+    --     'nvim-telescope/telescope-dap.nvim',
+    --     after = 'nvim-dap'
+    -- }
     -- GODOT engine integration
     use 'habamax/vim-godot'
->>>>>>> a5ab055599e4b40c83c26f4f1f09fc4cfa1ade70
 
     -- Motion enhancer
     -- TODO: keybind s collides with surrond
@@ -318,7 +312,15 @@ return require('packer').startup(function(use)
           "NvimTreeToggle",
         },
         config = function()
-          require("plugins/nvim-tree")
+          require("plugins.nvim-tree")
+        end
+    }
+
+    use {
+        "ms-jpq/chadtree",
+        branch = "chad",
+        config = function()
+            require("plugins.chadtree")
         end
     }
 
@@ -337,15 +339,15 @@ return require('packer').startup(function(use)
     use 'kevinhwang91/nvim-hlslens'
 
     -- Project Management
-    -- use {
-    --     "ahmedkhalf/project.nvim",
-    --     config = function()
-    --         require("project_nvim").setup {
-    --             manual_root = true,
-    --             silent_chdir = false,
-    --         }
-    --     end,
-    -- }
+    use {
+        "ahmedkhalf/project.nvim",
+        config = function()
+            require("project_nvim").setup {
+                manual_root = true,
+                silent_chdir = false,
+            }
+        end,
+    }
     --
     -- Better Command Line
     use {
@@ -394,7 +396,8 @@ return require('packer').startup(function(use)
     }
 
     -- Neogit
-    -- use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    use {'tpope/vim-fugitive'}
 
 
 -----------------------------------------------
@@ -427,7 +430,7 @@ return require('packer').startup(function(use)
 
     -- FORMATER
     -- TODO: doesnt work
-    use 'sbdchd/neoformat'
+    --use 'sbdchd/neoformat'
 
     -- Comments made easy
     use {
@@ -467,43 +470,5 @@ return require('packer').startup(function(use)
    --     requires = "nvim-treesitter/nvim-treesitter"
    -- }
 
------------------------------------------------
----------------- COMPLETION   -----------------
------------------------------------------------
-
-    -- Completion
-    -- use {
-    --     'hrsh7th/nvim-cmp',
-    --     config = function()
-    --         require('plugins/nvim-cmp')
-    --     end,
-    -- }
-
-    -- Completion Addons
-    -- use {
-    --     "hrsh7th/cmp-nvim-lsp",
-    --     after = "nvim-lsp-installer"
-    -- }
-    -- use 'onsails/lspkind-nvim'
-    -- use 'hrsh7th/cmp-buffer'
-    -- use 'hrsh7th/cmp-path'
-    -- use 'hrsh7th/cmp-cmdline'
-    -- use 'hrsh7th/cmp-nvim-lua'
-    -- use 'lukas-reineke/cmp-under-comparator'
-    -- use 'saadparwaiz1/cmp_luasnip'
-
-    -- Snippets
-    -- TODO: it doesn work
-    -- use {
-    --     'L3MON4D3/LuaSnip',
-    --     config = function()
-    --         require('plugins.luasnip')
-    --     end,
-    --     wants = "friendly-snippets",
-    -- }
-    -- use {
-    --     "rafamadriz/friendly-snippets",
-    --     event = "InsertEnter",
-    -- }
 end)
 --EOF

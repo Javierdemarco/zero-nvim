@@ -2,6 +2,7 @@ require('base')
 require('plugins')
 require('keybinds')
 vim.cmd[[
-    colorscheme nord
+    let ayucolor="mirage"
+    colorscheme ayu
     syntax on
 ]]

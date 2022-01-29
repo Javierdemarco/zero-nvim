@@ -65,7 +65,7 @@ opt.spell = false
 opt.spelllang = "en_us,es_es"
 
 -- Use clipboard instead of '+' and '*'
-opt.clipboard = 'unnamedplus'
+--opt.clipboard = 'unnamedplus'
 
 -- Python interpreter
 g.python3_host_prog = "/bin/python"
@@ -79,7 +79,7 @@ vim.cmd
 [[
 "autocmd BufEnter * silent! lcd %:p:h
 if index(argv(), ".") >= 0
-  autocmd VimEnter * CHADopen
+  autocmd VimEnter * NVimTree
   bd1
 elseif len(argv()) == 0
   autocmd VimEnter * Dashboard

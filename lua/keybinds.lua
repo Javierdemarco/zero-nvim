@@ -77,11 +77,12 @@ local keymap = {
     },
     l = {
         name = "LSP",
-        i = { "<cmd>LspInstall<cr>", "Install Langauge Server" },
         d = { "<cmd>lua vim.lsp.buf.definition()<cr>", "Jump To Definition" },
         D = { "<cmd>lua vim.lsp.buf.declaration()<cr>", "Jump To Declaraion" },
         h = { "<cmd>lua vim.lsp.buf.hover()<cr>", "Hover Info" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename Symbol" },
+        f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Formatting" },
+        a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Actions" },
         R = { "<cmd>Telescope lsp_references<cr>", "Telescope References" },
         s = { "<cmd>Telescope lsp_document_symbols<cr>", "Telescope Document Symbols" },
         S = { "<cmd>Telescope lsp_workspace_symbols<cr>", "Telescope Workspace Symbols" },
