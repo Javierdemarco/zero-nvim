@@ -35,9 +35,6 @@ return require('packer').startup(function(use)
 -------------------- LSP   --------------------
 -----------------------------------------------
 
-    -- COC LSP
-    --use {'neoclide/coc.nvim', branch = 'release'}
-
     use {'ms-jpq/coq_nvim', branch = 'coq',
         config = function()
             require("plugins.coq")
