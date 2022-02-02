@@ -19,7 +19,6 @@ It is a work in progress, it works but a lot of plugins don't atm.
   * Telescope-dap (Not working)
 * Coq
   * Coq.Artifacts
-  * Coq.Thirdparty
 * Lsp-colors
 * Vim-polyglot
 * Nvim-lspconfig
@@ -58,7 +57,7 @@ It is a work in progress, it works but a lot of plugins don't atm.
 * Plantuml-syntax
 * Open-browser
 * Toggleterm
-* Sniprun
+* Sniprun (Not working)
 * Vim-startuptime
 * Cheatsheet
 * Rnvimr

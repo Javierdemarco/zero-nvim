@@ -14,20 +14,17 @@ return require('packer').startup(function(use)
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} },
-        after = "telescope_find_directories",
         config = function()
             require("plugins.telescope")
         end,
     }
-
-    -- Fzf Directories
-    use {
-        "artart222/telescope_find_directories",
-        after = "telescope-fzf-native.nvim",
-    }
-
-    -- Improve telescope performance
+    use 'nvim-telescope/telescope-project.nvim'
+    use 'xiyaowong/telescope-emoji.nvim'
+    use "artart222/telescope_find_directories"
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+    use 'nvim-telescope/telescope-vimspector.nvim'
+    use 'jvgrootveld/telescope-zoxide'
+    use 'nvim-telescope/telescope-packer.nvim'
 
 
 
@@ -36,30 +33,19 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 
     use {'ms-jpq/coq_nvim', branch = 'coq',
+        after = 'nvim-lspconfig',
         config = function()
             require("plugins.coq")
         end
     }
     use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
-    use {'ms-jpq/coq.thirdparty',  branch = '3p'}
 
     -- Colors for icons in errors and warnigns
     use 'folke/lsp-colors.nvim'
 
-    -- Language packs
-    use 'sheerun/vim-polyglot'
-
-    use {'neovim/nvim-lspconfig',
-        config = function()
-            require('plugins.lsp')
-        end
-    }
-
+    use 'neovim/nvim-lspconfig'
     use 'liuchengxu/vista.vim'
     use 'simrat39/symbols-outline.nvim'
-
-    -- LSP like actions
-    use {'ray-x/navigator.lua', requires = {'ray-x/guihua.lua', run = 'cd lua/fzy && make'}}
 
 -----------------------------------------------
 ----------------- Markdown   ------------------
@@ -70,31 +56,16 @@ return require('packer').startup(function(use)
 
     -- Preview in Browser
     -- TODO: Doesnt work
-    --use 'iamcco/markdown-preview.nvim'
+    use {
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && yarn install'
+    }
 
 -----------------------------------------------
 ----------------- DEBUG   --------------------
 -----------------------------------------------
 
-    -- Debugger protocol
-    use {
-        'mfussenegger/nvim-dap',
-        --event = "BufEnter"
-    }
-
-    -- Debugger UI enhancement
-    use {
-        "rcarriga/nvim-dap-ui",
-        after = "DAPInstall.nvim",
-        config = function()
-            require('plugins.dap')
-        end,
-    }
-    -- Debbugger Installer
-    use {
-        "Pocco81/DAPInstall.nvim",
-        after = 'nvim-dap',
-    }
+    use 'puremourning/vimspector'
 
 -----------------------------------------------
 ----------------- UI   --------------------
@@ -107,9 +78,6 @@ return require('packer').startup(function(use)
             require('neoscroll').setup()
         end,
     }
-
-    -- MInimap
-    use 'wfxr/minimap.vim'
 
     -- Better sintax highlight
     use {
@@ -133,20 +101,20 @@ return require('packer').startup(function(use)
     }
 
     -- Text Objects for Treesitter
-    -- use {
-    --     'nvim-treesitter/nvim-treesitter-textobjects',
-    --     after = "nvim-treesitter",
-    -- }
+    use {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        after = "nvim-treesitter",
+    }
 
     -- Context when in long function
-    -- use {
-    --    'romgrk/nvim-treesitter-context',
-    --     config = function()
-    --         require('treesitter-context').setup()
-    --         vim.cmd('TSContextEnable')
-    --     end,
-    --     after = "nvim-treesitter",
-    -- }
+    use {
+       'romgrk/nvim-treesitter-context',
+        config = function()
+            require('treesitter-context').setup()
+            vim.cmd('TSContextEnable')
+        end,
+        after = "nvim-treesitter",
+    }
 
     -- Colors in HEX
     use {
@@ -171,30 +139,22 @@ return require('packer').startup(function(use)
     }
 
     -- Colorschemes
-    use 'sainnhe/gruvbox-material'
-    use 'ful1e5/onedark.nvim'
-    use 'shaunsingh/nord.nvim'
-    use 'ayu-theme/ayu-vim'
-    use 'sonph/onehalf'
-    use 'frenzyexists/aquarium-vim'
+    use 'javierdemarco/dark-forest'
 
-    -- Tab bar
+    -- Buffer Line
     use {
-        'romgrk/barbar.nvim',
-        requires = {'kyazdani42/nvim-web-devicons'},
+        'akinsho/bufferline.nvim',
         config = function()
-            require('plugins.barbar')
-        end,
+            require('plugins.bufferline')
+        end
     }
 
     -- Status Line
     use {
-        'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true},
+        'feline-nvim/feline.nvim',
         config = function()
-            require('plugins.lualine2')
-        end,
-        options = { theme = 'ayu-mirage' }
+           require('plugins.feline')
+        end
     }
 
     -- Welcome screen in Neovim
@@ -224,19 +184,14 @@ return require('packer').startup(function(use)
         end,
     }
 
+    use {'p00f/nvim-ts-rainbow'
+    , after = 'nvim-treesitter'}
+
 
 -----------------------------------------------
 ----------------- UTILITY   --------------------
 -----------------------------------------------
 
-    -- Zoxide integration with telescope
-    use 'jvgrootveld/telescope-zoxide'
-
-    -- Nvim-Dap integration with telescope
-    -- use {
-    --     'nvim-telescope/telescope-dap.nvim',
-    --     after = 'nvim-dap'
-    -- }
     -- GODOT engine integration
     use 'habamax/vim-godot'
 
@@ -312,15 +267,6 @@ return require('packer').startup(function(use)
           require("plugins.nvim-tree")
         end
     }
-
-    use {
-        "ms-jpq/chadtree",
-        branch = "chad",
-        config = function()
-            require("plugins.chadtree")
-        end
-    }
-
     -- Preatty list for showing things related to errors and warnings
     use {
         "folke/trouble.nvim",
@@ -356,7 +302,7 @@ return require('packer').startup(function(use)
     }
     -- Testing
     -- TODO: Install and check functionallity
-    --use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+    use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
 
     -- Keybinding configuration
     use {
@@ -393,7 +339,7 @@ return require('packer').startup(function(use)
     }
 
     -- Neogit
-    use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
     use {'tpope/vim-fugitive'}
 
 
@@ -457,15 +403,15 @@ return require('packer').startup(function(use)
 --    }
     -- Generation Documentation
     -- TODO: doesnt work Learn
-   -- use {
-   --     "danymat/neogen",
-   --     config = function()
-   --         require('neogen').setup {
-   --             enabled = true
-   --         }
-   --     end,
-   --     requires = "nvim-treesitter/nvim-treesitter"
-   -- }
+    use {
+        "danymat/neogen",
+        config = function()
+            require('neogen').setup {
+                enabled = true
+            }
+        end,
+        requires = "nvim-treesitter/nvim-treesitter"
+    }
 
 end)
 --EOF

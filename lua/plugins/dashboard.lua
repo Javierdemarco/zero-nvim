@@ -35,5 +35,5 @@ g.dashboard_custom_footer = {
 }
 
 -- Disable statusline and cursorline in dashboard.
-vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set laststatus=0 | else | set laststatus=2 | endif")
-vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set nocursorline | endif")
+--vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set laststatus=0 | else | set laststatus=2 | endif")
+--vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set nocursorline | endif")

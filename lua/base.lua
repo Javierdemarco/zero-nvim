@@ -16,7 +16,7 @@ opt.mouse = "a" -- Enable mouse support
 -- GUI
 opt.showtabline = 2 -- TabLine
 opt.cmdheight = 2 -- CMD height
-opt.guifont = "Caskaydia Cove Nerd Font" -- FontS
+opt.guifont = "Monoisome"
 opt.showmode = false -- Turn of Showmode
 opt.nu = true -- Line Numbers
 opt.rnu = true -- Line relative numbers mode
@@ -79,7 +79,7 @@ vim.cmd
 [[
 "autocmd BufEnter * silent! lcd %:p:h
 if index(argv(), ".") >= 0
-  autocmd VimEnter * NVimTree
+  autocmd VimEnter * NVimTreeToggle
   bd1
 elseif len(argv()) == 0
   autocmd VimEnter * Dashboard
