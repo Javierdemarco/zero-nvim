@@ -11,6 +11,7 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 
     -- Telescope as Fuzzy Finder
+    -- TODO: all keybidns
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} },
@@ -22,50 +23,129 @@ return require('packer').startup(function(use)
     use 'xiyaowong/telescope-emoji.nvim'
     use "artart222/telescope_find_directories"
     use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use 'nvim-telescope/telescope-vimspector.nvim'
     use 'jvgrootveld/telescope-zoxide'
-    use 'nvim-telescope/telescope-packer.nvim'
-
-
 
 -----------------------------------------------
 -------------------- LSP   --------------------
 -----------------------------------------------
 
-    use {'ms-jpq/coq_nvim', branch = 'coq',
-        after = 'nvim-lspconfig',
-        config = function()
-            require("plugins.coq")
-        end
+    -- TODO: autostart and icon long
+    -- use {'ms-jpq/coq_nvim', branch = 'coq',
+    --     after = 'nvim-lspconfig',
+    --     config = function()
+    --         require("plugins.coq")
+    --     end
+    -- }
+    -- use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
+
+     -- Snippet engine
+    use {
+      "L3MON4D3/LuaSnip",
+      config = function()
+        require("luasnip/loaders/from_vscode").lazy_load()
+      end,
+      requires = {
+        -- Snippet collections
+        "rafamadriz/friendly-snippets",
+      },
     }
-    use {'ms-jpq/coq.artifacts', branch = 'artifacts'}
 
-    -- Colors for icons in errors and warnigns
-    use 'folke/lsp-colors.nvim'
+    -- Completion engine
+    use {
+      "hrsh7th/nvim-cmp",
+      event = "BufRead",
+      config = function()
+        require("plugins.cmp").config()
+      end,
+    }
 
-    use 'neovim/nvim-lspconfig'
+    -- Snippet completion source
+    use {
+      "saadparwaiz1/cmp_luasnip",
+      after = "nvim-cmp",
+    }
+
+    -- Buffer completion source
+    use {
+      "hrsh7th/cmp-buffer",
+      after = "nvim-cmp",
+    }
+
+    -- Path completion source
+    use {
+      "hrsh7th/cmp-path",
+      after = "nvim-cmp",
+    }
+
+    -- LSP completion source
+    use {
+      "hrsh7th/cmp-nvim-lsp",
+    }
+
+    -- LSP manager
+    use {
+      "williamboman/nvim-lsp-installer",
+      event = "BufRead",
+      cmd = {
+        "LspInstall",
+        "LspInstallInfo",
+        "LspPrintInstalled",
+        "LspRestart",
+        "LspStart",
+        "LspStop",
+        "LspUninstall",
+        "LspUninstallAll",
+      },
+    }
+
+    -- Built-in LSP
+    use {
+      "neovim/nvim-lspconfig",
+      event = "BufRead",
+      config = function()
+        require "plugins.lsp"
+      end,
+    }
+
+    -- LSP enhancer
+    use {
+      "tami5/lspsaga.nvim",
+      event = "BufRead",
+      config = function()
+        require("plugins.lspsaga").config()
+      end,
+    }
+
+    -- LSP symbols
+    use {
+      "simrat39/symbols-outline.nvim",
+      cmd = "SymbolsOutline",
+      setup = function()
+        require("plugins.symbols-outline").setup()
+      end,
+    }
+
+
+    -- TODO: config
     use 'liuchengxu/vista.vim'
-    use 'simrat39/symbols-outline.nvim'
 
 -----------------------------------------------
 ----------------- Markdown   ------------------
 -----------------------------------------------
 
     -- Live Preview on floating window
+    -- TODO: config
     use 'ellisonleao/glow.nvim'
-
-    -- Preview in Browser
-    -- TODO: Doesnt work
-    use {
-        'iamcco/markdown-preview.nvim',
-        run = 'cd app && yarn install'
-    }
 
 -----------------------------------------------
 ----------------- DEBUG   --------------------
 -----------------------------------------------
 
-    use 'puremourning/vimspector'
+    -- TODO: config
+    use 'mfussenegger/nvim-dap'
+    use "Pocco81/DAPInstall.nvim"
+    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
+
 
 -----------------------------------------------
 ----------------- UI   --------------------
@@ -99,13 +179,11 @@ return require('packer').startup(function(use)
           "TSUpdateSync"
         },
     }
-
     -- Text Objects for Treesitter
     use {
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = "nvim-treesitter",
     }
-
     -- Context when in long function
     use {
        'romgrk/nvim-treesitter-context',
@@ -115,7 +193,6 @@ return require('packer').startup(function(use)
         end,
         after = "nvim-treesitter",
     }
-
     -- Colors in HEX
     use {
         'norcalli/nvim-colorizer.lua',
@@ -128,7 +205,6 @@ return require('packer').startup(function(use)
             vim.cmd("ColorizerAttachToBuffer")
         end,
     }
-
     -- Highlight range of operations
     use {
         'winston0410/range-highlight.nvim',
@@ -137,10 +213,8 @@ return require('packer').startup(function(use)
         end,
         requires = { 'winston0410/cmd-parser.nvim'},
     }
-
     -- Colorschemes
     use 'javierdemarco/dark-forest'
-
     -- Buffer Line
     use {
         'akinsho/bufferline.nvim',
@@ -148,7 +222,6 @@ return require('packer').startup(function(use)
             require('plugins.bufferline')
         end
     }
-
     -- Status Line
     use {
         'feline-nvim/feline.nvim',
@@ -156,7 +229,6 @@ return require('packer').startup(function(use)
            require('plugins.feline')
         end
     }
-
     -- Welcome screen in Neovim
     use {
         'glepnir/dashboard-nvim',
@@ -175,7 +247,6 @@ return require('packer').startup(function(use)
           require('plugins.dashboard')
         end
     }
-
     -- Indentation guides
     use{
         "lukas-reineke/indent-blankline.nvim",
@@ -183,7 +254,6 @@ return require('packer').startup(function(use)
             require('plugins.indent-blankline')
         end,
     }
-
     use {'p00f/nvim-ts-rainbow'
     , after = 'nvim-treesitter'}
 
@@ -193,11 +263,7 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 
     -- GODOT engine integration
-    use 'habamax/vim-godot'
-
-    -- Motion enhancer
-    -- TODO: keybind s collides with surrond
-    use 'ggandor/lightspeed.nvim'
+    --use 'habamax/vim-godot'
 
     -- Plantuml Plugin
     use {
@@ -214,6 +280,7 @@ return require('packer').startup(function(use)
     }
 
     -- Partial Code Run
+    -- TODO: config
     use {
         'michaelb/sniprun',
         config = function()
@@ -232,16 +299,6 @@ return require('packer').startup(function(use)
     -- Startup time
     use {
         'dstein64/vim-startuptime',
-    }
-
-    -- Keybinding lookup with FZF
-    use {
-        'sudormrfbin/cheatsheet.nvim',
-        requires = {
-            {'nvim-telescope/telescope.nvim'},
-            {'nvim-lua/popup.nvim'},
-            {'nvim-lua/plenary.nvim'},
-        },
     }
 
     -- Dev icons in ui
@@ -268,6 +325,7 @@ return require('packer').startup(function(use)
         end
     }
     -- Preatty list for showing things related to errors and warnings
+    -- TODO: see if it needs config
     use {
         "folke/trouble.nvim",
         requires = "kyazdani42/nvim-web-devicons",
@@ -282,6 +340,7 @@ return require('packer').startup(function(use)
     use 'kevinhwang91/nvim-hlslens'
 
     -- Project Management
+    -- TODO: config and keybinds
     use {
         "ahmedkhalf/project.nvim",
         config = function()
@@ -302,7 +361,7 @@ return require('packer').startup(function(use)
     }
     -- Testing
     -- TODO: Install and check functionallity
-    use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+    --use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
 
     -- Keybinding configuration
     use {
@@ -313,6 +372,7 @@ return require('packer').startup(function(use)
     }
 
     -- Rearrange Windows
+    -- TODO: see if it needs config or default is good, check keybinds
     use {
         'sindrets/winshift.nvim',
     }
@@ -322,16 +382,20 @@ return require('packer').startup(function(use)
 -----------------------------------------------
 
     -- Git Blame on changes
+    -- TODO: check if it needs config
     use 'f-person/git-blame.nvim'
 
     -- Lazygit inside vim
+    -- TODO: check if it needs config
     use {
         'kdheepak/lazygit.nvim',
     }
 
     -- Git Signs on lines
+    -- TODO: check if it needs config
     use {
         'lewis6991/gitsigns.nvim',
+        event = "BufRead",
         requires = {'nvim-lua/plenary.nvim'},
         config = function()
             require('gitsigns').setup()
@@ -340,15 +404,24 @@ return require('packer').startup(function(use)
 
     -- Neogit
     --use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+    -- TODO: check if it needs config
     use {'tpope/vim-fugitive'}
 
 
 -----------------------------------------------
 ------------- EDITING TOOLS   -----------------
 -----------------------------------------------
+    -- Jupyter In Neovim
+    use {
+      "ahmedkhalf/jupyter-nvim",
+      run = ":UpdateRemotePlugins",
+      config = function()
+        require("jupyter-nvim").setup{}
+      end
+    }
 
     -- Surrond operations
-    -- TODO: modifiy surrond works, add surrond doesnt
+    -- TODO: Good config (default keybinds is "s")
     use {
         'blackCauldron7/surround.nvim',
         config = function()
@@ -359,9 +432,11 @@ return require('packer').startup(function(use)
     }
 
     -- Multiple Cursor
+    -- TODO: config and keybind
     use 'terryma/vim-multiple-cursors'
 
     -- Autopair
+    -- TODO: see if its needs config
     use {
         'windwp/nvim-autopairs',
         config = function()
@@ -369,13 +444,15 @@ return require('packer').startup(function(use)
         end,
     }
     -- Delete Trailing Spaces and Lines
+    -- TODO: see if it needs config
     use "McAuleyPenney/tidy.nvim"
 
     -- FORMATER
     -- TODO: doesnt work
-    --use 'sbdchd/neoformat'
+    use 'sbdchd/neoformat'
 
     -- Comments made easy
+    -- TODO: seemds good in default, check if needs config
     use {
         'numToStr/Comment.nvim',
         config = function()
@@ -383,7 +460,8 @@ return require('packer').startup(function(use)
         end
     }
 
-    -- TODO highlighting
+    -- TODO: highlighting
+    -- TODO: config :Todo{Quickfix, Telescope, LocList, Trouble}
     use {
         "folke/todo-comments.nvim",
         requires = "nvim-lua/plenary.nvim",
@@ -403,15 +481,30 @@ return require('packer').startup(function(use)
 --    }
     -- Generation Documentation
     -- TODO: doesnt work Learn
-    use {
-        "danymat/neogen",
+    -- use {
+    --     "danymat/neogen",
+    --     config = function()
+    --         require('neogen').setup {
+    --             enabled = true
+    --         }
+    --     end,
+    --     requires = "nvim-treesitter/nvim-treesitter"
+    -- }
+
+-----------------------------------------------
+------------- Python   -----------------
+-----------------------------------------------
+
+    --
+    use {'hkupty/iron.nvim',
         config = function()
-            require('neogen').setup {
-                enabled = true
-            }
+            require("plugins.iron")
         end,
-        requires = "nvim-treesitter/nvim-treesitter"
     }
+    use 'kana/vim-textobj-user'
+    use 'kana/vim-textobj-line'
+    use 'GCBallesteros/vim-textobj-hydrogen'
+    use 'GCBallesteros/jupytext.vim'
 
 end)
 --EOF

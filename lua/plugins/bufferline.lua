@@ -8,7 +8,7 @@ bufferline.setup{
         numbers = "ordinal",
         tab_size = 18,
         diagnostics = "nvim_lsp",
-        offsets = {{filetype = "NvimTree", text = "File Explorer"}},
+        offsets = {{filetype = "NvimTree", text = "File Explorer", paddig = 1}},
         show_buffer_icons = true, -- disable filetype icons for buffers
         show_buffer_close_icons = true,
         show_close_icon = true,

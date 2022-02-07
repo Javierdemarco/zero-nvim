@@ -12,9 +12,10 @@ require('nvim-tree').setup {
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {},
-  auto_close          = false,
+  auto_close          = true,
   open_on_tab         = false,
-  hijack_cursor       = false,
+  hijack_cursor       = true,
+  hide_root_folder = true,
   update_cwd          = true,
   update_to_buf_dir   = {
     enable = true,
@@ -40,7 +41,11 @@ require('nvim-tree').setup {
   },
   filters = {
     dotfiles = false,
-    custom = {}
+    custom = {
+            ".git",
+            "node_modules",
+            ".cache",
+        }
   },
   git = {
     enable = true,
@@ -48,8 +53,10 @@ require('nvim-tree').setup {
     timeout = 500,
   },
   view = {
-    width = "20%",
+    width = 25,
     side = 'left',
+    allow_resize = true,
+    hide_root_folder = false,
     mappings = {
       custom_only = false,
       list = {}
@@ -61,5 +68,19 @@ require('nvim-tree').setup {
   trash = {
     cmd = "trash",
     require_confirm = true
-  }
+  },
+  ignore_ft_on_setup = {
+      "dashboard",
+      "startify",
+      "alpha",
+    },
+    quit_on_open = false,
+    show_icons = {
+      git = 1,
+      folders = 1,
+      files = 1,
+      folder_arrows = 0,
+      tree_width = 30,
+    },
+
 }

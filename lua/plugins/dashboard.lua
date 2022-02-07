@@ -6,6 +6,8 @@ local fn = vim.fn
 
 g.dashboard_disable_statusline = 1
 g.dashboard_default_executive = "telescope"
+local plugins_count = fn.len(fn.globpath("~/.local/share/nvim/site/pack/packer/start", "*", 0, 1))
+
 
 g.dashboard_custom_header = {
 "                                              ",
@@ -31,9 +33,15 @@ g.dashboard_custom_section = {
 
 g.dashboard_custom_footer = {
     " ",
-    "Zerim Loaded",
+    "Zerim Loaded " .. plugins_count .. " plugins ",
 }
 
--- Disable statusline and cursorline in dashboard.
---vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set laststatus=0 | else | set laststatus=2 | endif")
---vim.cmd("autocmd BufEnter * if &ft is \"dashboard\" | set nocursorline | endif")
+vim.cmd [[
+  augroup dashboard_settings
+    autocmd!
+    autocmd FileType dashboard set showtabline=0
+    autocmd BufWinLeave <buffer> set showtabline=2
+    autocmd BufEnter * if &ft is "dashboard" | set laststatus=0 | else | set laststatus=2 | endif
+    autocmd BufEnter * if &ft is "dashboard" | set nocursorline | endif
+  augroup end
+]]

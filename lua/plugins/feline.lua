@@ -1,6 +1,6 @@
 local present, feline = pcall(require, "feline")
 if not present then
-  return
+    return
 end
 
 local colors = {
@@ -52,8 +52,8 @@ local lsp = require 'feline.providers.lsp'
 local vi_mode_utils = require 'feline.providers.vi_mode'
 
 local lsp_get_diag = function(str)
-  local count = vim.lsp.diagnostic.get_count(0, str)
-  return (count > 0) and ' '..count..' ' or ''
+    local count = vim.lsp.diagnostic.get_count(0, str)
+    return (count > 0) and ' '..count..' ' or ''
 end
 
 -- LuaFormatter off
@@ -62,7 +62,7 @@ local comps = {
     vi_mode = {
         left = {
             provider = function()
-              return '  ' .. vi_mode_utils.get_vim_mode()
+                return '  ' .. vi_mode_utils.get_vim_mode()
             end,
             hl = function()
                 local val = {
@@ -90,20 +90,20 @@ local comps = {
     file = {
         info = {
             provider = {
-              name = 'file_info',
-              opts = {
-                type = 'unique',
-                file_readonly_icon = '  ',
-                -- file_readonly_icon = '  ',
-                -- file_readonly_icon = '  ',
-                -- file_readonly_icon = '  ',
-                -- file_modified_icon = '',
-                file_modified_icon = '',
-                -- file_modified_icon = 'ﱐ',
-                -- file_modified_icon = '',
-                -- file_modified_icon = '',
-                -- file_modified_icon = '',
-              }
+                name = 'file_info',
+                opts = {
+                    type = 'unique',
+                    file_readonly_icon = '  ',
+                    -- file_readonly_icon = '  ',
+                    -- file_readonly_icon = '  ',
+                    -- file_readonly_icon = '  ',
+                    -- file_modified_icon = '',
+                    file_modified_icon = '',
+                    -- file_modified_icon = 'ﱐ',
+                    -- file_modified_icon = '',
+                    -- file_modified_icon = '',
+                    -- file_modified_icon = '',
+                }
             },
             hl = {
                 fg = colors.blue,
@@ -243,8 +243,8 @@ local comps = {
 }
 
 local components = {
-  active = {},
-  inactive = {},
+    active = {},
+    inactive = {},
 }
 
 table.insert(components.active, {})
@@ -276,15 +276,15 @@ table.insert(components.active[3], comps.vi_mode.right)
 -- local ts_parsers = require("nvim-treesitter.parsers")
 -- local ts_queries = require("nvim-treesitter.query")
 --[[ table.insert(components.active[2], {
-  provider = function()
-    local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
-    return ("%d:%s [%d, %d] - [%d, %d]")
-      :format(node:symbol(), node:type(), node:range())
-  end,
-  enabled = function()
-    local ok, ts_parsers = pcall(require, "nvim-treesitter.parsers")
-    return ok and ts_parsers.has_parser()
-  end
+provider = function()
+local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
+return ("%d:%s [%d, %d] - [%d, %d]")
+:format(node:symbol(), node:type(), node:range())
+end,
+enabled = function()
+local ok, ts_parsers = pcall(require, "nvim-treesitter.parsers")
+return ok and ts_parsers.has_parser()
+end
 }) ]]
 
 -- require'feline'.setup {}

@@ -8,7 +8,36 @@ end
 map("n", "<F5>", ":lua require(\"dap\").continue()<CR>")
 map("n", "<F10>", ":lua require(\"dap\").step_over()<CR>")
 map("n", "<F11>", ":lua require(\"dap\").step_into()<CR>")
-map("n", "<F12>", ":lua require(\"dap\").step_out()<CR>")
+-- Normal --
+-- Better window navigation
+map("n", "<C-h>", "<C-w>h", opts)
+map("n", "<C-j>", "<C-w>j", opts)
+map("n", "<C-k>", "<C-w>k", opts)
+map("n", "<C-l>", "<C-w>l", opts)
+
+-- Resize with arrows
+map("n", "<C-Up>", "<cmd>resize -2<CR>", opts)
+map("n", "<C-Down>", "<cmd>resize +2<CR>", opts)
+map("n", "<C-Left>", "<cmd>vertical resize -2<CR>", opts)
+map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", opts)
+
+-- Navigate buffers
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", opts)
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", opts)
+
+-- Move text up and down
+map("n", "<A-j>", "<Esc><cmd>m .+1<CR>==gi", opts)
+map("n", "<A-k>", "<Esc><cmd>m .-2<CR>==gi", opts)
+-- Move text up and down
+map("v", "<A-j>", "<cmd>m .+1<CR>==", opts)
+map("v", "<A-k>", "<cmd>m .-2<CR>==", opts)
+map("v", "p", '"_dP', opts)
+-- Visual Block --
+-- Move text up and down
+map("x", "J", "<cmd>move '>+1<CR>gv-gv", opts)
+map("x", "K", "<cmd>move '<-2<CR>gv-gv", opts)
+map("x", "<A-j>", "<cmd>move '>+1<CR>gv-gv", opts)
+map("x", "<A-k>", "<cmd>move '<-2<CR>gv-gv", opts)
 
 -- Which Key
 --
@@ -49,30 +78,17 @@ local keymap = {
     b = {
         name = 'Buffers',
         b = { "<cmd>Telescope buffers<cr>", "Buffer List" },
-        n = { "<cmd>BufferNext<cr>", "Buffer Next"},
-        p = { "<cmd>BufferPrevious<cr>", "Buffer Previous"},
-        N = { "<cmd>BufferMoveNext<cr>", "Move Buffer Previous"},
-        P = { "<cmd>BufferMovePrevious<cr>", "Move Buffer Previous"},
-        c = { "<cmd>BufferClose<cr>", "Buffer Close"},
-        C = { "<cmd>BufferCloseAllButCurrent<cr>", "Buffer Close All But Current"},
-        o = {
-            name = "Order",
-            n = { "<cmd>BufferOrderByBufferNumber<cr>", "Order By Nuber"},
-            l = { "<cmd>BufferOrderByBufferLanguage<cr>", "Order By Language"},
-            d = { "<cmd>BufferOrderByBufferDirectory<cr>", "Order By Directory"},
-        }
+        n = { "<cmd><cr>", "Buffer Next"},
+        p = { "<cmd><cr>", "Buffer Previous"},
+        N = { "<cmd>BufferLineMoveNext<cr>", "Move Buffer Previous"},
+        P = { "<cmd>BufferLineMovePrev<cr>", "Move Buffer Previous"},
+        c = { "<cmd>bd<cr>", "Buffer Close"},
     },
     g = {
         name = 'Git',
         b = { "<cmd>Telescope git_branches<cr>", "Git Branches" },
-        g = { "<cmd>LazyGit<cr>", "LazyGit"},
-    },
-    G = {
-        name = 'Godot',
-            r = { "<cmd>GodotRun<cr>", "Godot Run"},
-            R = { "<cmd>GodotRunLast<cr>", "Godot Run Last"},
-            c = { "<cmd>GodotRunCurrent<cr>", "Godot Run Current"},
-            f = { "<cmd>GodotRunFZF<cr>", "Godot Run FZF"},
+        G = { "<cmd>LazyGit<cr>", "LazyGit"},
+        g = { "<cmd>Git<cr>", "Git Status"},
     },
     l = {
         name = "LSP",
@@ -88,9 +104,9 @@ local keymap = {
         t = { "<cmd>Telescope treesitter<cr>", "Telescope Treesitter" },
 
     },
-    t = {
-        name = "Toggle",
-        s = { "<cmd>SymbolsOutline<cr>", "Symbols Outline" },
+    o = {
+        name = "Open",
+        s = { "<cmd>Vista<cr>", "Symbols Outline" },
         t = {
             name = "Terminal",
             v = { "<cmd>ToggleTerm dir=. direction=vertical<cr>", "Vertical"},
@@ -98,13 +114,16 @@ local keymap = {
             f = { "<cmd>ToggleTerm dir=. direction=float<cr>", "Float"},
 
         },
+
+        O = { "<cmd>NvimTreeFocus<CR>", "NvinTree Focus"},
         r = {
             name = "Ranger",
             r = { "<cmd>RnvimrToggle<cr>", "Ranger" },
             s = { "<cmd>RnvimrResize<cr>", "Ranger" },
         },
         p = {"<cmd>PlantumlToggle<cr>", "PlantUml"},
-        n = { "<cmd>NvimTreeToggle<cr>", "NvimTree"}
+        n = { "<cmd>NvimTreeToggle<cr>", "NvimTree"},
+        P = {"<cdm>PackerSync<cr>", "PackerSync"},
     },
     T = {
         name = "Trouble",
@@ -117,14 +136,10 @@ local keymap = {
     },
     d = {
         name = "Debugger",
-        c = { ":lua require(\"dap\").continue()<CR>", "Continue"},
         t = { ":lua require(\"dap\").terminate()<CR>", "Terminate"},
         b = { ":lua require(\"dap\").toggle_breakpoint()<CR>", "Toggle Breakpoint"},
         s = { ":lua require(\"dap\").set_breakpoint(vim.fn.input('Breakpoint Condition: '))<CR>", "Set Condition Breakpoint"},
         l = { ":lua require(\"dap\").set_breakpoint(nil, nil, vim.fn.input('Log Point Message '))<CR>", "Set Condition Breakpoint"},
-        o = { ":lua require(\"dap\").step_over()<CR>", "Step Over"},
-        i = { ":lua require(\"dap\").step_into()<CR>", "Step Into"},
-        u = { ":lua require(\"dap\").step_out()<CR>", "Step Out"},
         k = { ":lua require(\"dap\").step_back()<CR>", "Step Back"},
         r = { ":lua require(\"dap\").run_to_cursor()<CR>", "Run To Cursor"},
         T = { ":lua require(\"dapui\").toggle()<CR>", "Toggle DAP UI"},
@@ -146,16 +161,8 @@ local keymap = {
         n = { "<cmd>new<cr>", "New Window" },
         q = { "<cmd>q<cr>", "Quit Window" },
         Q = { "<cmd>q!<cr>", "Quit Window Without Saving" },
-        h = { "<C-W>h<cr>", "Move To Window Left" },
-        j = { "<C-W>j<cr>", "Move To Window Down" },
-        k = { "<C-W>k<cr>", "Move To Window Up" },
-        l = { "<C-W>l<cr>", "Move To Window Left" },
         w = { "<C-W>w<cr>", "Move To Other Window" },
         e = { "<C-W>=<cr>", "Make Windows Equal" },
-        t = { "<C-W>+<cr>", "Increase Width" },
-        T = { "<C-W>-<cr>", "Decrease Width" },
-        a = { "<C-W><<cr>", "Icrease Height" },
-        A = { "<C-W>><cr>", "Decrease Height" },
     }
 }
 
